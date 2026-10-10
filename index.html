@@ -1,0 +1,1723 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BIOLOGÍA - Sistema Locomotor: Tejido Óseo, Articulaciones y Contracción Muscular (UCCuyo)</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- KaTeX for ultra-fast LaTeX formulas -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+  <!-- FontAwesome for biomedical icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Google Fonts: Outfit & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Outfit', sans-serif;
+      background-color: #f7f9f6;
+    }
+    /* Paleta Institucional Verde Oliva UCCuyo */
+    .text-accent { color: #436600; }
+    .bg-accent { background-color: #436600; }
+    .bg-accent-hover:hover { background-color: #324d00; }
+    .bg-accent-light { background-color: #f1f6eb; }
+    .border-accent { border-color: #436600; }
+
+    .text-primary { color: #436600; }
+    .bg-primary { background-color: #436600; }
+    .bg-primary-dark { background-color: #324d00; }
+    .border-primary { border-color: #436600; }
+
+    .focus-accent:focus {
+      border-color: #436600;
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(67, 102, 0, 0.2);
+    }
+
+    .code-font {
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .custom-scroll::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scroll::-webkit-scrollbar-track {
+      background: #f1f5f9;
+      border-radius: 10px;
+    }
+    .custom-scroll::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 10px;
+    }
+    .custom-scroll::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+
+    canvas {
+      touch-action: none;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between text-slate-800">
+
+  <!-- Toast Notification element -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none bg-white border border-gray-200 shadow-2xl rounded-2xl p-4 max-w-sm flex items-center space-x-3 text-slate-800">
+    <div id="toast-icon" class="text-accent text-xl">
+      <i class="fa-solid fa-circle-info"></i>
+    </div>
+    <div id="toast-text" class="text-xs leading-relaxed font-medium">Notificación</div>
+  </div>
+
+  <!-- Cabecera Institucional UCCuyo -->
+  <header class="bg-white border-b border-gray-200 shadow-sm sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-lg bg-accent flex items-center justify-center text-white font-bold text-xl shadow-md">
+          B
+        </div>
+        <div>
+          <h1 class="text-lg font-bold text-gray-800 tracking-wide uppercase">BIOLOGÍA</h1>
+          <p class="text-xs text-gray-500 font-semibold">PreMédico (Facultad de Cs. Médicas - UCCuyo)</p>
+        </div>
+      </div>
+      <!-- Botón Guía de Uso -->
+      <button onclick="openTutorial()" class="flex items-center gap-1.5 px-3 py-1.5 bg-accent text-white text-xs font-semibold rounded-lg shadow-sm hover:opacity-90 transition">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+        Guía de Uso
+      </button>
+    </div>
+  </header>
+
+  <!-- Contenedor Principal con Menú Lateral y Módulos -->
+  <main class="flex-1 max-w-7xl w-full mx-auto p-4 md:p-6 flex flex-col lg:flex-row gap-6">
+    
+    <!-- Menú de Navegación Lateral -->
+    <nav class="w-full lg:w-72 flex flex-row lg:flex-col gap-2 bg-white p-3.5 rounded-2xl shadow-sm border border-gray-200 overflow-x-auto lg:overflow-x-visible whitespace-nowrap lg:whitespace-normal sticky top-20 h-fit shrink-0">
+      <button onclick="switchTab('mod-oseo')" id="tab-btn-mod-oseo" class="nav-btn bg-accent text-white flex-1 lg:flex-none text-left py-2.5 px-3.5 rounded-xl text-xs sm:text-sm font-semibold transition flex items-center gap-2.5 shadow-sm">
+        <i class="fa-solid fa-bone text-sm w-4 text-center"></i>
+        <span>1. Tejido Óseo & Esqueleto</span>
+      </button>
+      <button onclick="switchTab('mod-articular')" id="tab-btn-mod-articular" class="nav-btn text-gray-700 hover:bg-gray-100 flex-1 lg:flex-none text-left py-2.5 px-3.5 rounded-xl text-xs sm:text-sm font-medium transition flex items-center gap-2.5">
+        <i class="fa-solid fa-link text-sm w-4 text-center"></i>
+        <span>2. Articulaciones & Diartrosis</span>
+      </button>
+      <button onclick="switchTab('mod-muscular')" id="tab-btn-mod-muscular" class="nav-btn text-gray-700 hover:bg-gray-100 flex-1 lg:flex-none text-left py-2.5 px-3.5 rounded-xl text-xs sm:text-sm font-medium transition flex items-center gap-2.5">
+        <i class="fa-solid fa-layer-group text-sm w-4 text-center"></i>
+        <span>3. Histología & Sarcómero</span>
+      </button>
+      <button onclick="switchTab('mod-contraccion')" id="tab-btn-mod-contraccion" class="nav-btn text-gray-700 hover:bg-gray-100 flex-1 lg:flex-none text-left py-2.5 px-3.5 rounded-xl text-xs sm:text-sm font-medium transition flex items-center gap-2.5">
+        <i class="fa-solid fa-bolt text-sm w-4 text-center"></i>
+        <span>4. Fisiología de Contracción</span>
+      </button>
+      </nav>
+
+    <!-- Contenedor Dinámico de Módulos -->
+    <div class="flex-1 w-full space-y-6 min-w-0">
+<section id="mod-oseo" class="module-tab space-y-8 animate-fadeIn">
+      <!-- Banner intro -->
+      <div class="relative overflow-hidden rounded-2xl bg-white border border-gray-200 p-6 md:p-8 shadow-xl">
+        <div class="relative z-10 max-w-3xl space-y-2">
+          <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-sky-500/10 border border-sky-500/20 text-sky-700 text-xs font-semibold">
+            <span>Módulo 1</span> • <span>Biología Celular & Anatomía Macroscópica</span>
+          </div>
+          <h2 class="text-xl sm:text-2xl font-bold text-gray-900">
+            Tejido Óseo y Dinámica del Esqueleto
+          </h2>
+          <p class="text-gray-700 text-sm leading-relaxed">
+            El hueso no es un andamiaje inerte: es un órgano metabólicamente activo compuesto por una matriz mineral de cristales de hidroxiapatita $\text{Ca}_{10}(\text{PO}_4)_6(\text{OH})_2$ sobre fibras de colágeno tipo I, con irrigación rica y constante remodelación humoral.
+          </p>
+        </div>
+      </div>
+
+      <!-- Grid: Funciones metabólicas interactivas -->
+      <div>
+        <h3 class="text-lg font-bold text-gray-900 mb-3 flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span>
+          1.1 Funciones Biomecánicas y Metabólicas del Esqueleto
+        </h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <!-- Tarjeta 1 -->
+          <div class="bg-white border border-gray-200 hover:border-amber-500/40 rounded-xl p-4 transition-all duration-200">
+            <div class="flex items-center gap-3 mb-2">
+              <span class="p-2 rounded-lg bg-amber-500/10 text-amber-800"><i class="fa-solid fa-scale-balanced text-accent"></i></span>
+              <h4 class="font-bold text-gray-800 text-sm">Homeostasis Mineral de $\text{Ca}^{2+}$ y $\text{P}$</h4>
+            </div>
+            <p class="text-xs text-gray-600 leading-relaxed">
+              El hueso almacena el <strong class="text-gray-800">99% del calcio corporal</strong> y el <strong class="text-gray-800">85% del fósforo</strong>. Regulado hormonalmente por la <span class="text-amber-800 font-bold font-mono text-[11px]">Parathormona (PTH)</span> (hipercalcemiante, estimula osteoclastos) y la <span class="text-amber-800 font-bold font-mono text-[11px]">Calcitonina</span> (hipocalcemiante, inhibe resorción).
+            </p>
+          </div>
+
+          <!-- Tarjeta 2 -->
+          <div class="bg-white border border-gray-200 hover:border-sky-500/40 rounded-xl p-4 transition-all duration-200">
+            <div class="flex items-center gap-3 mb-2">
+              <span class="p-2 rounded-lg bg-red-500/10 text-red-400"><i class="fa-solid fa-droplet text-rose-500"></i></span>
+              <h4 class="font-bold text-gray-800 text-sm">Hematopoyesis (Médula Ósea Roja)</h4>
+            </div>
+            <p class="text-xs text-gray-600 leading-relaxed">
+              Alojada en el tejido óseo esponjoso (crestas ilíacas, epífisis de fémur/húmero, esternón, vértebras). Contiene células madre pluripotentes (<span class="text-sky-700 font-mono text-[11px]">HSC</span>) productoras de eritrocitos, leucocitos y trombocitos.
+            </p>
+          </div>
+
+          <!-- Tarjeta 3 -->
+          <div class="bg-white border border-gray-200 hover:border-yellow-500/40 rounded-xl p-4 transition-all duration-200">
+            <div class="flex items-center gap-3 mb-2">
+              <span class="p-2 rounded-lg bg-yellow-500/10 text-yellow-400"><i class="fa-solid fa-cubes-stacked text-amber-500"></i></span>
+              <h4 class="font-bold text-gray-800 text-sm">Reserva Lipídica (Médula Ósea Amarilla)</h4>
+            </div>
+            <p class="text-xs text-gray-600 leading-relaxed">
+              Ocupa la cavidad medular central de la diáfisis en adultos. Constituida predominantemente por adipocitos uniloculares como almacén energético químico de reserva.
+            </p>
+          </div>
+
+          <!-- Tarjeta 4 -->
+          <div class="bg-white border border-gray-200 hover:border-sky-500/40 rounded-xl p-4 transition-all duration-200">
+            <div class="flex items-center gap-3 mb-2">
+              <span class="p-2 rounded-lg bg-sky-500/10 text-sky-700"><i class="fa-solid fa-dumbbell text-sky-600"></i></span>
+              <h4 class="font-bold text-gray-800 text-sm">Sostén & Palanca Biomecánica</h4>
+            </div>
+            <p class="text-xs text-gray-600 leading-relaxed">
+              Puntos rígidos de inserción para los tendones musculares. Los huesos actúan como brazos de palanca multiplicando la fuerza ejercida por la contracción muscular sarcomérica.
+            </p>
+          </div>
+
+          <!-- Tarjeta 5 -->
+          <div class="bg-white border border-gray-200 hover:border-blue-500/40 rounded-xl p-4 transition-all duration-200">
+            <div class="flex items-center gap-3 mb-2">
+              <span class="p-2 rounded-lg bg-blue-500/10 text-blue-400"><i class="fa-solid fa-shield-halved text-emerald-600"></i></span>
+              <h4 class="font-bold text-gray-800 text-sm">Protección Visceral Crítica</h4>
+            </div>
+            <p class="text-xs text-gray-600 leading-relaxed">
+              Cráneo protege encéfalo; conducto raquídeo vertebral protege la médula espinal; caja torácica (esternón y 12 pares de costillas) resguarda corazón, grandes vasos y pulmones.
+            </p>
+          </div>
+
+          <!-- Tarjeta 6 -->
+          <div class="bg-white border border-gray-200 hover:border-emerald-500/40 rounded-xl p-4 transition-all duration-200">
+            <div class="flex items-center gap-3 mb-2">
+              <span class="p-2 rounded-lg bg-emerald-500/10 text-emerald-700"><i class="fa-solid fa-bolt text-amber-500"></i></span>
+              <h4 class="font-bold text-gray-800 text-sm">Equilibrio Ácido-Base</h4>
+            </div>
+            <p class="text-xs text-gray-600 leading-relaxed">
+              El hueso absorbe o libera sales de fosfato y carbonato cálcico alcalinas amortiguando cambios bruscos del pH sanguíneo fisiológico (<span class="text-emerald-700 font-mono text-[11px]">7.35 - 7.45</span>).
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Anatomía Macroscópica de Hueso Largo + Placa Epifisaria -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 bg-white border border-gray-200 rounded-2xl p-6">
+        <div class="lg:col-span-6 space-y-4">
+          <div class="flex items-center justify-between">
+            <h3 class="text-base font-bold text-gray-900 flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-sky-400"></span>
+              1.2 Anatomía Macroscópica del Hueso Largo
+            </h3>
+            <span class="text-xs font-mono text-sky-700 bg-sky-50/80 border border-sky-800/40 px-2 py-0.5 rounded">Haga clic en las zonas</span>
+          </div>
+          <p class="text-xs text-gray-700 leading-relaxed">
+            Un hueso largo típico (como el fémur o húmero) presenta una arquitectura especializada diseñada para soportar fuerzas de compresión, flexión y torsión.
+          </p>
+
+          <!-- Interactive bone vector diagram -->
+          <div class="relative bg-gray-50 rounded-xl p-4 border border-gray-200 flex justify-center items-center overflow-hidden">
+            <svg id="boneSvg" viewBox="0 0 320 480" class="w-full max-w-[280px] h-auto select-none">
+              <!-- Definitions -->
+              <defs>
+                <linearGradient id="boneGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#cbd5e1" />
+                  <stop offset="50%" stop-color="#f8fafc" />
+                  <stop offset="100%" stop-color="#94a3b8" />
+                </linearGradient>
+                <linearGradient id="marrowGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#ca8a04" />
+                  <stop offset="100%" stop-color="#eab308" />
+                </linearGradient>
+                <linearGradient id="cartilageGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="#38bdf8" />
+                  <stop offset="100%" stop-color="#0284c7" />
+                </linearGradient>
+              </defs>
+
+              <!-- Epiphysis Proximal Cartilage -->
+              <path id="part-cartilago-prox" onclick="selectBonePart('cartilago')" d="M100 25 C115 15, 145 10, 160 10 C175 10, 205 15, 220 25 C210 32, 110 32, 100 25 Z" fill="url(#cartilageGrad)" class="cursor-pointer transition-all hover:brightness-125" />
+              
+              <!-- Epiphysis Proximal -->
+              <path id="part-epifisis-prox" onclick="selectBonePart('epifisis-prox')" d="M95 28 C70 50, 85 90, 115 110 C125 117, 135 120, 160 120 C185 120, 195 117, 205 110 C235 90, 250 50, 225 28 C200 40, 120 40, 95 28 Z" fill="#e2e8f0" stroke="#475569" stroke-width="2" class="cursor-pointer transition-all hover:fill-sky-100" />
+              
+              <!-- Growth Plate (Línea / Placa Epifisaria) -->
+              <rect id="part-placa" onclick="selectBonePart('placa')" x="110" y="115" width="100" height="8" rx="4" fill="#f43f5e" class="cursor-pointer transition-all hover:fill-rose-400" />
+              <text x="220" y="122" fill="#fda4af" font-size="9" font-weight="bold">Placa Epifisaria</text>
+
+              <!-- Diaphysis outer bone -->
+              <path id="part-diafisis" onclick="selectBonePart('diafisis')" d="M115 123 L115 355 C125 365, 135 368, 160 368 C185 368, 195 365, 205 355 L205 123 Z" fill="url(#boneGrad)" stroke="#475569" stroke-width="2" class="cursor-pointer transition-all hover:fill-slate-100" />
+
+              <!-- Cavidad Medular inside diaphysis -->
+              <rect id="part-cavidad" onclick="selectBonePart('cavidad')" x="135" y="145" width="50" height="190" rx="8" fill="url(#marrowGrad)" class="cursor-pointer transition-all hover:brightness-110" />
+              <text x="160" y="245" fill="#78350f" font-size="9" font-weight="bold" text-anchor="middle">Médula Amarilla</text>
+
+              <!-- Periostio Indicator (Capa externa) -->
+              <line id="part-periostio" onclick="selectBonePart('periostio')" x1="110" y1="170" x2="110" y2="310" stroke="#0ea5e9" stroke-width="4" stroke-dasharray="3,3" class="cursor-pointer transition-all" />
+              <text x="40" y="240" fill="#38bdf8" font-size="9" font-weight="bold" onclick="selectBonePart('periostio')" class="cursor-pointer">Periostio</text>
+              <line x1="82" y1="237" x2="108" y2="237" stroke="#38bdf8" stroke-width="1.5" />
+
+              <!-- Lower growth plate -->
+              <rect x="112" y="358" width="96" height="6" rx="3" fill="#f43f5e" />
+
+              <!-- Epiphysis Distal -->
+              <path id="part-epifisis-dist" onclick="selectBonePart('epifisis-dist')" d="M115 364 C90 380, 80 420, 105 450 C125 465, 195 465, 215 450 C240 420, 230 380, 205 364 Z" fill="#e2e8f0" stroke="#475569" stroke-width="2" class="cursor-pointer transition-all hover:fill-sky-100" />
+
+              <!-- Cartílago Distal -->
+              <path d="M107 452 C125 467, 195 467, 213 452 C205 465, 115 465, 107 452 Z" fill="url(#cartilageGrad)" />
+            </svg>
+          </div>
+        </div>
+
+        <!-- Detalle de la región seleccionada del hueso -->
+        <div class="lg:col-span-6 flex flex-col justify-between space-y-4">
+          <div class="bg-gray-50 border border-gray-200 rounded-xl p-5 h-full flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between pb-3 border-b border-gray-200">
+                <span id="bone-part-tag" class="text-xs uppercase font-mono px-2 py-0.5 rounded bg-sky-900/60 text-sky-700 border border-sky-700/50">Epífisis Proximal</span>
+                <span class="text-xs text-gray-600 font-mono">Arquitectura Macroscópica</span>
+              </div>
+
+              <h4 id="bone-part-title" class="text-base sm:text-lg font-bold text-gray-900 mt-3 mb-2">Epífisis (Proximal y Distal)</h4>
+              <p id="bone-part-desc" class="text-gray-700 text-xs sm:text-sm leading-relaxed mb-4">
+                Extremos ensanchados del hueso largo diseñados para articularse con huesos vecinos. Formados externamente por una delgada cortical de hueso compacto e internamente por un entramado trabecular de <strong class="text-amber-800 font-bold">hueso esponjoso</strong> que aloja médula ósea roja hematopoyética.
+              </p>
+
+              <div id="bone-part-clinical" class="bg-white border-l-4 border-amber-500 p-3 rounded-r-lg text-xs space-y-1">
+                <div class="font-bold text-amber-800">Relevancia Médico-Clínica:</div>
+                <div id="bone-part-clinical-text" class="text-gray-700">
+                  La forma abultada de las epífisis amplía la superficie de contacto articular disminuyendo las presiones por centímetro cuadrado, protegida por cartílago hialino avascular.
+                </div>
+              </div>
+            </div>
+
+            <!-- Selector de botones rápidos -->
+            <div class="pt-4 mt-4 border-t border-gray-200 flex flex-wrap gap-2">
+              <button onclick="selectBonePart('epifisis-prox')" class="text-xs px-2.5 py-1 rounded-lg bg-gray-100 hover:bg-accent hover:text-white border border-gray-200 text-gray-700 font-medium transition">Epífisis</button>
+              <button onclick="selectBonePart('diafisis')" class="text-xs px-2.5 py-1 rounded-lg bg-gray-100 hover:bg-accent hover:text-white border border-gray-200 text-gray-700 font-medium transition">Diáfisis</button>
+              <button onclick="selectBonePart('placa')" class="text-xs px-2.5 py-1 rounded-lg bg-gray-100 hover:bg-accent hover:text-white border border-gray-200 text-gray-700 font-medium transition">Placa Epifisaria</button>
+              <button onclick="selectBonePart('cavidad')" class="text-xs px-2.5 py-1 rounded-lg bg-gray-100 hover:bg-accent hover:text-white border border-gray-200 text-gray-700 font-medium transition">Cavidad Medular</button>
+              <button onclick="selectBonePart('periostio')" class="text-xs px-2.5 py-1 rounded-lg bg-gray-100 hover:bg-accent hover:text-white border border-gray-200 text-gray-700 font-medium transition">Periostio</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Histología: Hueso Compacto (Sistema de Havers / Osteona) vs. Esponjoso -->
+      <div class="space-y-4">
+        <h3 class="text-lg font-bold text-gray-900 flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+          1.3 Histología: Hueso Compacto (Osteona) vs. Hueso Esponjoso
+        </h3>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <!-- HUESO COMPACTO: OSTEONA -->
+          <div class="bg-white border border-gray-200 rounded-2xl p-6 space-y-4">
+            <div class="flex items-center justify-between">
+              <h4 class="font-bold text-sky-700 text-base flex items-center gap-2">
+                <span><i class="fa-solid fa-microscope text-accent"></i></span> Sistema de Havers (Osteona)
+              </h4>
+              <span class="text-xs font-mono text-gray-600 bg-gray-100 text-gray-700 border border-gray-300 px-2.5 py-0.5 rounded-md font-semibold">Unidad Estructural</span>
+            </div>
+            <p class="text-xs text-gray-700 leading-relaxed">
+              Cilindro longitudinal concéntrico alineado con el eje de carga mecánica. Su diseño en capas distribuye el estrés y evita la propagación de microfracturas.
+            </p>
+
+            <!-- Esquema SVG Interactivo de Osteona -->
+            <div class="relative bg-white rounded-xl p-4 border border-gray-200 flex justify-center shadow-inner">
+              <svg viewBox="0 0 300 240" class="w-full max-w-[280px] select-none">
+                <!-- Concentric lamellae -->
+                <circle cx="150" cy="120" r="105" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="4,2"/>
+                <circle cx="150" cy="120" r="85" fill="#e2e8f0" stroke="#94a3b8" stroke-width="2" />
+                <circle cx="150" cy="120" r="65" fill="#cbd5e1" stroke="#64748b" stroke-width="2" stroke-dasharray="3,2"/>
+                <circle cx="150" cy="120" r="45" fill="#e2e8f0" stroke="#94a3b8" stroke-width="2" />
+                <circle cx="150" cy="120" r="25" fill="#94a3b8" stroke="#0284c7" stroke-width="2" />
+
+                <!-- Havers Canal (Center) -->
+                <circle cx="150" cy="120" r="16" fill="#ffffff" stroke="#0284c7" stroke-width="2" />
+                <!-- Blood vessels in Havers canal -->
+                <circle cx="145" cy="116" r="5" fill="#ef4444" /> <!-- Arteriola -->
+                <circle cx="155" cy="118" r="5" fill="#3b82f6" /> <!-- Vénula -->
+                <circle cx="150" cy="126" r="3" fill="#eab308" /> <!-- Nervio -->
+
+                <!-- Osteocytes inside Lacunae & canaliculi -->
+                <!-- Ring 1 -->
+                <ellipse cx="120" cy="85" rx="6" ry="3" fill="#fbbf24" transform="rotate(-30 120 85)" />
+                <ellipse cx="180" cy="85" rx="6" ry="3" fill="#fbbf24" transform="rotate(30 180 85)" />
+                <ellipse cx="195" cy="130" rx="6" ry="3" fill="#fbbf24" transform="rotate(10 195 130)" />
+                <ellipse cx="105" cy="130" rx="6" ry="3" fill="#fbbf24" transform="rotate(-10 105 130)" />
+                <ellipse cx="130" cy="160" rx="6" ry="3" fill="#fbbf24" transform="rotate(30 130 160)" />
+                <ellipse cx="170" cy="160" rx="6" ry="3" fill="#fbbf24" transform="rotate(-30 170 160)" />
+
+                <!-- Canaliculi lines -->
+                <line x1="145" y1="104" x2="124" y2="88" stroke="#f59e0b" stroke-width="1" stroke-dasharray="2,2"/>
+                <line x1="155" y1="104" x2="176" y2="88" stroke="#f59e0b" stroke-width="1" stroke-dasharray="2,2"/>
+                <line x1="166" y1="120" x2="189" y2="130" stroke="#f59e0b" stroke-width="1" stroke-dasharray="2,2"/>
+                <line x1="134" y1="120" x2="111" y2="130" stroke="#f59e0b" stroke-width="1" stroke-dasharray="2,2"/>
+
+                <!-- Labels -->
+                <text x="150" y="20" fill="#0369a1" font-size="10" text-anchor="middle" font-weight="700">Laminillas Concéntricas de Matriz Calcificada</text>
+                <text x="150" y="232" fill="#b91c1c" font-size="10" text-anchor="middle" font-weight="700">Conducto de Havers Central (Neurovascular)</text>
+              </svg>
+            </div>
+
+            <ul class="text-xs text-gray-700 space-y-2">
+              <li class="flex items-start gap-2">
+                <span class="text-sky-700 font-bold">•</span>
+                <span><strong class="text-gray-900">Conducto de Havers:</strong> Canal axial central por donde discurren capilares fenestrados, vénulas y fibras nerviosas amielínicas.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-sky-700 font-bold">•</span>
+                <span><strong class="text-gray-900">Conductos de Volkmann:</strong> Túneles transversales/oblicuos que comunican el periostio y la cavidad medular con los canales de Havers sin laminillas concéntricas propias.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-sky-700 font-bold">•</span>
+                <span><strong class="text-gray-900">Laminillas concéntricas:</strong> Anillos de colágeno mineralizado cuyas fibras cambian de orientación alternada en cada capa para maximizar resistencia torsional.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-sky-700 font-bold">•</span>
+                <span><strong class="text-gray-900">Lagunas y Canalículos:</strong> Cavidades donde residen los osteocitos; sus prolongaciones dendríticas se conectan por uniones GAP (comunicantes) a través de los canalículos.</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- HUESO ESPONJOSO (TRABECULAR) -->
+          <div class="bg-white border border-gray-200 rounded-2xl p-6 space-y-4">
+            <div class="flex items-center justify-between">
+              <h4 class="font-bold text-amber-800 font-bold text-base flex items-center gap-2">
+                <span><i class="fa-solid fa-network-wired text-amber-600"></i></span> Hueso Esponjoso (Trabecular)
+              </h4>
+              <span class="text-xs font-mono text-gray-600 bg-gray-100 text-gray-700 border border-gray-300 px-2.5 py-0.5 rounded-md font-semibold">Red Tridimensional</span>
+            </div>
+            <p class="text-xs text-gray-700 leading-relaxed">
+              No posee osteonas completas ni conductos de Havers centrales debido a que el grosor trabecular permite la difusión directa de nutrientes desde los capilares del endomisio/médula.
+            </p>
+
+            <div class="bg-gray-50 rounded-xl p-4 border border-gray-200 flex flex-col justify-center items-center h-48 space-y-2">
+              <div class="w-full flex items-center justify-around">
+                <div class="text-center">
+                  <div class="w-16 h-16 rounded-full bg-rose-50 border-2 border-rose-300 shadow-sm flex items-center justify-center text-xl mb-1 shadow-inner">
+                    <i class="fa-solid fa-droplet text-rose-500"></i>
+                  </div>
+                  <span class="text-[11px] font-bold text-rose-700 font-bold">Médula Roja</span>
+                  <div class="text-[10px] text-gray-600">Hematopoyesis activa</div>
+                </div>
+                <div class="text-center">
+                  <div class="w-16 h-16 rounded-full bg-amber-50 border-2 border-amber-300 shadow-sm flex items-center justify-center text-xl mb-1 shadow-inner">
+                    <i class="fa-solid fa-bolt text-amber-500"></i>
+                  </div>
+                  <span class="text-[11px] font-bold text-amber-800 font-bold">Líneas de Tensión</span>
+                  <div class="text-[10px] text-gray-600">Ley de Wolff</div>
+                </div>
+                <div class="text-center">
+                  <div class="w-16 h-16 rounded-full bg-slate-100 border-2 border-slate-300 shadow-sm flex items-center justify-center text-xl mb-1 shadow-inner">
+                    <i class="fa-solid fa-feather text-gray-500"></i>
+                  </div>
+                  <span class="text-[11px] font-bold text-gray-700">Bajo Peso</span>
+                  <div class="text-[10px] text-gray-600">Ligereza esquelética</div>
+                </div>
+              </div>
+              <p class="text-[11px] text-center text-gray-600 italic pt-2">
+                "Las trabéculas se orientan con precisión milimétrica según las líneas de fuerza biomecánica aplicadas durante la marcha."
+              </p>
+            </div>
+
+            <ul class="text-xs text-gray-700 space-y-2">
+              <li class="flex items-start gap-2">
+                <span class="text-amber-800 font-bold">•</span>
+                <span><strong class="text-gray-900">Espacios intertrabeculares:</strong> Albergan la médula ósea roja hematopoyética en huesos planos (esternón, ilion) y epífisis.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-amber-800 font-bold">•</span>
+                <span><strong class="text-gray-900">Nutrición por difusión:</strong> Los osteocitos trabeculares intercambian metabolitos directamente con los sinusoides medulares circundantes.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-amber-800 font-bold">•</span>
+                <span><strong class="text-gray-900">Endostio:</strong> Membrana de tejido conjuntivo que recubre todas las trabéculas y cavidades internas, rica en osteoblastos y osteoclastos.</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Líneas Celulares y Remodelación Ósea Dinámica -->
+      <div class="bg-white border border-gray-200 rounded-2xl p-6 space-y-6">
+        <div>
+          <h3 class="text-lg font-bold text-gray-900 flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-rose-400"></span>
+            1.4 Líneas Celulares Óseas y Dinámica de Remodelación
+          </h3>
+          <p class="text-xs text-gray-700 mt-1">
+            El tejido óseo renueva entre el 5% y el 10% de la masa esquelética total anualmente gracias al equilibrio coordinado entre formación y resorción.
+          </p>
+        </div>
+
+        <!-- 4 Células Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <!-- 1. Osteoprogenitora -->
+          <div class="bg-gray-50 border border-gray-200 rounded-xl p-4 flex flex-col justify-between hover:border-sky-500/50 transition">
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-mono text-sky-700 font-bold">Línea 1</span>
+                <span class="text-[10px] bg-gray-100 text-gray-700 px-1.5 py-0.5 rounded">Mesénquima</span>
+              </div>
+              <h4 class="font-bold text-gray-900 text-sm">Célula Osteoprogenitora</h4>
+              <p class="text-xs text-gray-600 mt-1 leading-relaxed">
+                Células madre fusiformes ubicadas en la capa interna del periostio, endostio y canales vasculares. Conservan capacidad de mitosis y se diferencian en osteoblastos ante estímulos mecánicos o $\text{BMPs}$ (proteínas morfogenéticas óseas).
+              </p>
+            </div>
+            <div class="mt-3 pt-2 border-t border-gray-200 text-[11px] font-mono text-sky-700">
+              Célula madre indiferenciada
+            </div>
+          </div>
+
+          <!-- 2. Osteoblasto -->
+          <div class="bg-gray-50 border border-gray-200 rounded-xl p-4 flex flex-col justify-between hover:border-amber-500/50 transition">
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-mono text-amber-800 font-bold">Línea 2</span>
+                <span class="text-[10px] bg-amber-50 text-amber-800 font-bold px-1.5 py-0.5 rounded">Síntesis</span>
+              </div>
+              <h4 class="font-bold text-gray-900 text-sm">Osteoblasto</h4>
+              <p class="text-xs text-gray-600 mt-1 leading-relaxed">
+                Célula cuboide con abundante RER y Golgi. Sintetiza y secreta la matriz orgánica no calcificada (<strong class="text-gray-800">osteoide</strong>: colágeno tipo I, osteocalcina y fosfatasa alcalina para precipitar $\text{Ca}^{2+}$ y $\text{PO}_4^{3-}$).
+              </p>
+            </div>
+            <div class="mt-3 pt-2 border-t border-gray-200 text-[11px] font-mono text-amber-800 font-bold">
+              Formación & Mineralización
+            </div>
+          </div>
+
+          <!-- 3. Osteocito -->
+          <div class="bg-gray-50 border border-gray-200 rounded-xl p-4 flex flex-col justify-between hover:border-emerald-500/50 transition">
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-mono text-emerald-700 font-bold">Línea 3</span>
+                <span class="text-[10px] bg-emerald-50 text-emerald-800 border border-emerald-200 px-1.5 py-0.5 rounded">Madurez</span>
+              </div>
+              <h4 class="font-bold text-gray-900 text-sm">Osteocito</h4>
+              <p class="text-xs text-gray-600 mt-1 leading-relaxed">
+                Célula madura atrapada en una laguna ósea. Es el mecanosensor maestro: detecta el estrés de compresión/cizallamiento del fluido canalicular y regula la actividad de blastos/clastos secretando <strong class="text-gray-800">esclerostina</strong>.
+              </p>
+            </div>
+            <div class="mt-3 pt-2 border-t border-gray-200 text-[11px] font-mono text-emerald-700">
+              Mantenimiento metabólico
+            </div>
+          </div>
+
+          <!-- 4. Osteoclasto -->
+          <div class="bg-gray-50 border border-gray-200 rounded-xl p-4 flex flex-col justify-between hover:border-rose-500/50 transition">
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-mono text-rose-700 font-bold">Línea 4</span>
+                <span class="text-[10px] bg-rose-50 text-rose-800 border border-rose-200 px-1.5 py-0.5 rounded">Resorción</span>
+              </div>
+              <h4 class="font-bold text-gray-900 text-sm">Osteoclasto</h4>
+              <p class="text-xs text-gray-600 mt-1 leading-relaxed">
+                Célula gigante multinucleada originada de la fusión de monocitos/macrófagos hematopoyéticos ($\text{RANKL}$). Posee borde en cepillo y secreta $\text{H}^+$ (bomba de protones) y <strong class="text-gray-800">catepsina K</strong> para degradar matriz calcificada en las lagunas de Howship.
+              </p>
+            </div>
+            <div class="mt-3 pt-2 border-t border-gray-200 text-[11px] font-mono text-rose-700">
+              Resorción y liberación de $\text{Ca}^{2+}$
+            </div>
+          </div>
+        </div>
+
+        <!-- Mecanismo de Osificación: Intramembranosa vs Endocondral -->
+        <div class="bg-gray-50 p-5 rounded-xl border border-gray-200">
+          <h4 class="text-sm font-bold text-amber-800 uppercase tracking-wider mb-3">1.5 Tipos de Osificación Prenatal y Posnatal</h4>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+            <div class="p-3 rounded-lg bg-white border border-gray-200">
+              <span class="font-bold text-gray-900 text-sm block mb-1">A) Osificación Intramembranosa</span>
+              <p class="text-gray-700 leading-relaxed">
+                Ocurre directamente en el seno del <strong class="text-sky-700">mesénquima vascular embrionario</strong> sin molde cartilaginoso previo. Típica de los huesos planos del cráneo (frontal, parietales, occipital escamoso), mandíbula y parte de la clavícula.
+              </p>
+            </div>
+            <div class="p-3 rounded-lg bg-white border border-gray-200">
+              <span class="font-bold text-gray-900 text-sm block mb-1">B) Osificación Endocondral</span>
+              <p class="text-gray-700 leading-relaxed">
+                El tejido óseo sustituye a un molde previo de <strong class="text-amber-800 font-bold">cartílago hialino</strong>. Se forma primero un centro de osificación primario diafisario y luego secundarios epifisarios, persistiendo la <strong class="text-rose-700">placa metafisaria de crecimiento</strong> hasta la pubertad.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Clasificación y División del Esqueleto Humano (206 Huesos) -->
+      <div class="bg-white border border-gray-200 rounded-2xl p-6 space-y-5">
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <div>
+            <h3 class="text-base sm:text-lg font-bold text-gray-900 flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-cyan-400"></span>
+              1.6 División del Esqueleto: Axial (80) vs. Apendicular (126)
+            </h3>
+            <p class="text-xs text-gray-600">Total: 206 huesos constantes en el adulto humano</p>
+          </div>
+          <div class="flex items-center space-x-2 text-xs font-mono">
+            <span class="px-2.5 py-1 rounded bg-sky-50 border border-sky-200 text-sky-700">Axial: 80</span>
+            <span class="px-2.5 py-1 rounded bg-amber-50 border border-amber-200 text-amber-800 font-bold">Apendicular: 126</span>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- ESQUELETO AXIAL -->
+          <div class="bg-gray-50 border border-sky-900/40 rounded-xl p-5 space-y-3">
+            <div class="flex items-center justify-between pb-2 border-b border-gray-200">
+              <h4 class="font-bold text-sky-700 text-sm">Esqueleto Axial (80 huesos)</h4>
+              <span class="text-[11px] text-gray-600">Eje central del cuerpo</span>
+            </div>
+            <div class="space-y-2 text-xs text-gray-700">
+              <div class="flex justify-between items-center py-1 border-b border-gray-200">
+                <span><strong>Cráneo y Cara:</strong> 8 craneales (neurocráneo) + 14 faciales (viscerocráneo)</span>
+                <span class="font-mono text-sky-700 font-bold">22</span>
+              </div>
+              <div class="flex justify-between items-center py-1 border-b border-gray-200">
+                <span><strong>Huesecillos del oído medio:</strong> Martillo, Yunque, Estribo (3 pares)</span>
+                <span class="font-mono text-sky-700 font-bold">6</span>
+              </div>
+              <div class="flex justify-between items-center py-1 border-b border-gray-200">
+                <span><strong>Hueso Hioides:</strong> Hueso flotante cervical impar</span>
+                <span class="font-mono text-sky-700 font-bold">1</span>
+              </div>
+              <div class="flex justify-between items-center py-1 border-b border-gray-200">
+                <span><strong>Columna Vertebral:</strong> 7 Cervicales, 12 Torácicas, 5 Lumbares, Sacro (5 fusionadas), Cóccix (4 fusionadas)</span>
+                <span class="font-mono text-sky-700 font-bold">26</span>
+              </div>
+              <div class="flex justify-between items-center py-1">
+                <span><strong>Tórax Óseo:</strong> Esternón (1) + 12 pares de costillas (7 verdaderas, 3 falsas, 2 flotantes)</span>
+                <span class="font-mono text-sky-700 font-bold">25</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- ESQUELETO APENDICULAR -->
+          <div class="bg-gray-50 border border-amber-900/40 rounded-xl p-5 space-y-3">
+            <div class="flex items-center justify-between pb-2 border-b border-gray-200">
+              <h4 class="font-bold text-amber-800 font-bold text-sm">Esqueleto Apendicular (126 huesos)</h4>
+              <span class="text-[11px] text-gray-600">Extremidades y Cinturas</span>
+            </div>
+            <div class="space-y-2 text-xs text-gray-700">
+              <div class="flex justify-between items-center py-1 border-b border-gray-200">
+                <span><strong>Cintura Escapular:</strong> Clavículas (2) y Escápulas / Omóplatos (2)</span>
+                <span class="font-mono text-amber-800 font-bold">4</span>
+              </div>
+              <div class="flex justify-between items-center py-1 border-b border-gray-200">
+                <span><strong>Miembros Superiores:</strong> Húmero (2), Radio (2), Cúbito (2), Carpos (16), Metacarpos (10), Falanges (28)</span>
+                <span class="font-mono text-amber-800 font-bold">60</span>
+              </div>
+              <div class="flex justify-between items-center py-1 border-b border-gray-200">
+                <span><strong>Cintura Pélvica:</strong> Coxales / Ilíacos (Ilion, Isquion, Pubis fusionados)</span>
+                <span class="font-mono text-amber-800 font-bold">2</span>
+              </div>
+              <div class="flex justify-between items-center py-1">
+                <span><strong>Miembros Inferiores:</strong> Fémur (2), Rótula (2 sesamoideos), Tibia (2), Peroné (2), Tarsos (14), Metatarsos (10), Falanges (28)</span>
+                <span class="font-mono text-amber-800 font-bold">60</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Clasificación morfológica -->
+        <div class="grid grid-cols-2 sm:grid-cols-5 gap-3 pt-2">
+          <div class="bg-gray-50 p-2.5 rounded-lg border border-gray-200 text-center">
+            <span class="text-xs font-bold text-gray-800 block">Largos</span>
+            <span class="text-[10px] text-gray-600">Fémur, Húmero</span>
+          </div>
+          <div class="bg-gray-50 p-2.5 rounded-lg border border-gray-200 text-center">
+            <span class="text-xs font-bold text-gray-800 block">Cortos</span>
+            <span class="text-[10px] text-gray-600">Carpianos, Tarsianos</span>
+          </div>
+          <div class="bg-gray-50 p-2.5 rounded-lg border border-gray-200 text-center">
+            <span class="text-xs font-bold text-gray-800 block">Planos</span>
+            <span class="text-[10px] text-gray-600">Parietal, Escápula, Esternón</span>
+          </div>
+          <div class="bg-gray-50 p-2.5 rounded-lg border border-gray-200 text-center">
+            <span class="text-xs font-bold text-gray-800 block">Irregulares</span>
+            <span class="text-[10px] text-gray-600">Vértebras, Esfenoides</span>
+          </div>
+          <div class="bg-gray-50 p-2.5 rounded-lg border border-gray-200 text-center col-span-2 sm:col-span-1">
+            <span class="text-xs font-bold text-gray-800 block">Sesamoideos</span>
+            <span class="text-[10px] text-gray-600">Rótula (Patela)</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- MODULO 2: ARTICULACIONES Y BIOMECÁNICA -->
+    <!-- ========================================== -->
+    <section id="mod-articular" class="module-tab hidden space-y-8 animate-fadeIn">
+      <div class="relative overflow-hidden rounded-2xl bg-white border border-gray-200 p-6 md:p-8 shadow-xl">
+        <div class="relative z-10 max-w-3xl space-y-2">
+          <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-300 text-xs font-semibold">
+            <span>Módulo 2</span> • <span>Artrología & Clasificación Funcional</span>
+          </div>
+          <h2 class="text-xl sm:text-2xl font-bold text-gray-900">
+            Articulaciones: Clasificación y Biomecánica Sinovial
+          </h2>
+          <p class="text-gray-700 text-sm leading-relaxed">
+            Una articulación (artrosis) es el punto de contacto entre dos o más huesos, hueso y cartílago, o hueso y dientes. Su clasificación obedece a un doble criterio: estructural (tejido conectivo intermedio) y funcional (grado de movimiento permitido).
+          </p>
+        </div>
+      </div>
+
+      <!-- Clasificación Dual: Estructural vs Funcional -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Sinartrosis / Fibrosas -->
+        <div class="bg-white border border-gray-200 hover:border-gray-200 rounded-2xl p-5 space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-xs uppercase font-mono px-2 py-0.5 rounded bg-gray-100 text-gray-700">Inmóviles</span>
+            <span class="text-xs text-sky-700 font-mono">Sinartrosis</span>
+          </div>
+          <h4 class="text-base font-bold text-gray-900">Articulaciones Fibrosas</h4>
+          <p class="text-xs text-gray-600 leading-relaxed">
+            Los huesos están unidos directamente por tejido conectivo denso irregular rico en fibras colágenas. <strong class="text-gray-800">Carecen de cavidad articular sinovial</strong>.
+          </p>
+          <div class="bg-gray-50 p-3 rounded-lg border border-gray-200 space-y-1.5 text-xs">
+            <div class="text-gray-700"><strong class="text-sky-700">Suturas:</strong> Dentadas del cráneo (ej. interparietal o sagital). Con la edad sufren sinostosis (fusión ósea).</div>
+            <div class="text-gray-700"><strong class="text-sky-700">Sindesmosis:</strong> Membrana interósea radio-cubital o tibia-peronea distal.</div>
+            <div class="text-gray-700"><strong class="text-sky-700">Gónfosis:</strong> Articulación dentoalveolar fijada por el ligamento periodontal.</div>
+          </div>
+        </div>
+
+        <!-- Anfiartrosis / Cartilaginosas -->
+        <div class="bg-white border border-gray-200 hover:border-gray-200 rounded-2xl p-5 space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-xs uppercase font-mono px-2 py-0.5 rounded bg-amber-50 text-amber-800 font-bold">Semimóviles</span>
+            <span class="text-xs text-amber-800 font-mono">Anfiartrosis</span>
+          </div>
+          <h4 class="text-base font-bold text-gray-900">Articulaciones Cartilaginosas</h4>
+          <p class="text-xs text-gray-600 leading-relaxed">
+            Los extremos óseos están unidos firmemente por cartílago hialino o fibrocartílago. Tampoco poseen cavidad articular sinovial.
+          </p>
+          <div class="bg-gray-50 p-3 rounded-lg border border-gray-200 space-y-1.5 text-xs">
+            <div class="text-gray-700"><strong class="text-amber-800 font-bold">Sincondrosis:</strong> Unidas por cartílago hialino (ej. primera articulación condroesternal y la placa epifisaria de crecimiento).</div>
+            <div class="text-gray-700"><strong class="text-amber-800 font-bold">Sínfisis:</strong> Unidas por una ancha almohadilla de fibrocartílago (ej. discos intervertebrales y la sínfisis púbica). Gran capacidad de absorción de choque.</div>
+          </div>
+        </div>
+
+        <!-- Diartrosis / Sinoviales -->
+        <div class="bg-white border border-gray-200 hover:border-sky-500/40 rounded-2xl p-5 space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-xs uppercase font-mono px-2 py-0.5 rounded bg-sky-50 text-sky-800 border border-sky-200">Móviles</span>
+            <span class="text-xs text-sky-700 font-mono">Diartrosis</span>
+          </div>
+          <h4 class="text-base font-bold text-gray-900">Articulaciones Sinoviales</h4>
+          <p class="text-xs text-gray-600 leading-relaxed">
+            Dotadas de una <strong class="text-gray-800">cavidad sinovial</strong> interpuesta que confiere gran libertad de movimiento angular y rotacional.
+          </p>
+          <div class="bg-gray-50 p-3 rounded-lg border border-gray-200 space-y-1.5 text-xs">
+            <div class="text-gray-700"><strong class="text-sky-700">Enartrosis (Esferoidea):</strong> Hombro y Cadera (triaxial).</div>
+            <div class="text-gray-700"><strong class="text-sky-700">Gínglimo (Trocleares):</strong> Codo y Rodilla (flexión/extensión uniaxial).</div>
+            <div class="text-gray-700"><strong class="text-sky-700">Trocoide (Pivote):</strong> Atlanto-axoidea central y radio-cubital proximal.</div>
+            <div class="text-gray-700"><strong class="text-sky-700">Encaje recíproco:</strong> Pulgar (trapecio-metacarpiana).</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Simulador Anatómico Interactivo de Articulación Sinovial (Diartrosis) -->
+      <div class="bg-white border border-gray-200 rounded-2xl p-6 space-y-6">
+        <div>
+          <h3 class="text-base sm:text-lg font-bold text-gray-900 flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-blue-400"></span>
+            2.2 Anatomía de una Articulación Sinovial Típica
+          </h3>
+          <p class="text-xs text-gray-700 mt-1">
+            Explora los elementos de protección, reducción de fricción y contención ligamentaria haciendo clic en el diagrama interactivo.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+          <!-- Canvas / SVG de articulación sinovial -->
+          <div class="lg:col-span-7 bg-gray-50 rounded-xl p-4 border border-gray-200 flex justify-center items-center">
+            <svg viewBox="0 0 360 320" class="w-full max-w-[340px] select-none">
+              <!-- Hueso Superior -->
+              <path d="M120 20 L240 20 L240 90 C240 120, 210 130, 180 130 C150 130, 120 120, 120 90 Z" fill="#cbd5e1" stroke="#475569" stroke-width="2" />
+              <!-- Cartilago Hialino Superior -->
+              <path id="joint-cart-sup" onclick="inspectJoint('cartilago')" d="M130 110 C145 130, 215 130, 230 110 C220 136, 140 136, 130 110 Z" fill="#38bdf8" class="cursor-pointer hover:fill-sky-300 transition" />
+
+              <!-- Cavidad Articular & Líquido Sinovial (Espacio intermedio) -->
+              <path id="joint-synovial-cav" onclick="inspectJoint('liquido')" d="M115 140 C140 150, 220 150, 245 140 C240 165, 120 165, 115 140 Z" fill="#0284c7" opacity="0.4" class="cursor-pointer hover:opacity-80 transition" />
+
+              <!-- Cartilago Hialino Inferior -->
+              <path id="joint-cart-inf" onclick="inspectJoint('cartilago')" d="M130 190 C145 170, 215 170, 230 190 C220 164, 140 164, 130 190 Z" fill="#38bdf8" class="cursor-pointer hover:fill-sky-300 transition" />
+
+              <!-- Hueso Inferior -->
+              <path d="M120 210 C120 180, 150 170, 180 170 C210 170, 240 180, 240 210 L240 290 L120 290 Z" fill="#cbd5e1" stroke="#475569" stroke-width="2" />
+
+              <!-- Cápsula Articular Fibrosa Externa (Lateral izquierdo y derecho) -->
+              <path id="joint-capsule" onclick="inspectJoint('capsula')" d="M120 90 Q80 150 120 210 L108 210 Q68 150 108 90 Z" fill="#64748b" class="cursor-pointer hover:fill-slate-400 transition" />
+              <path onclick="inspectJoint('capsula')" d="M240 90 Q280 150 240 210 L252 210 Q292 150 252 90 Z" fill="#64748b" class="cursor-pointer hover:fill-slate-400 transition" />
+
+              <!-- Membrana Sinovial Interna -->
+              <path id="joint-membrana" onclick="inspectJoint('membrana')" d="M118 95 Q90 150 118 205" stroke="#ef4444" stroke-width="3" fill="none" class="cursor-pointer hover:stroke-rose-300 transition" />
+              <path onclick="inspectJoint('membrana')" d="M242 95 Q270 150 242 205" stroke="#ef4444" stroke-width="3" fill="none" class="cursor-pointer hover:stroke-rose-300 transition" />
+
+              <!-- Ligamentos de Refuerzo Extrínsecos -->
+              <path id="joint-ligamento" onclick="inspectJoint('ligamentos')" d="M96 70 Q60 150 96 230" stroke="#f59e0b" stroke-width="5" stroke-dasharray="5,2" fill="none" class="cursor-pointer hover:stroke-amber-300 transition" />
+              <path onclick="inspectJoint('ligamentos')" d="M264 70 Q300 150 264 230" stroke="#f59e0b" stroke-width="5" stroke-dasharray="5,2" fill="none" class="cursor-pointer hover:stroke-amber-300 transition" />
+
+              <!-- Interactive Pin Labels -->
+              <circle cx="180" cy="150" r="4" fill="#38bdf8" class="animate-ping" />
+              <text x="180" y="70" fill="#334155" font-size="10" font-weight="bold" text-anchor="middle">Hueso 1</text>
+              <text x="180" y="250" fill="#334155" font-size="10" font-weight="bold" text-anchor="middle">Hueso 2</text>
+            </svg>
+          </div>
+
+          <!-- Panel explicativo del elemento articular -->
+          <div class="lg:col-span-5 bg-gray-50 border border-gray-200 rounded-xl p-5 space-y-3">
+            <div class="flex items-center justify-between pb-2 border-b border-gray-200">
+              <span id="joint-tag" class="text-xs font-mono text-sky-700 font-bold bg-sky-50 px-2 py-0.5 rounded border border-sky-800">Cartílago Articular Hialino</span>
+              <span class="text-xs text-gray-500 font-mono">Componente</span>
+            </div>
+
+            <h4 id="joint-title" class="text-base font-bold text-gray-900">Cartílago Articular Hialino</h4>
+            <p id="joint-desc" class="text-xs sm:text-sm text-gray-700 leading-relaxed">
+              Capa de 2 a 4 mm de espesor que reviste las carillas óseas. Es completamente <strong class="text-amber-800 font-bold">avascular, alinfático y no inervado</strong>. Su matriz hidrofílica de colágeno II y agrecano actúa como un amortiguador biológico hidrostático que reduce el coeficiente de fricción a valores inferiores al del hielo sobre hielo.
+            </p>
+
+            <div id="joint-extra" class="bg-white border-l-4 border-sky-500 p-3 rounded-r-lg text-xs text-gray-700">
+              <strong class="text-sky-700">Nutrición:</strong> Al ser avascular, se nutre por difusión pasiva desde el líquido sinovial durante los ciclos alternados de carga y descarga articular.
+            </div>
+
+            <!-- Botones interactivos -->
+            <div class="grid grid-cols-2 gap-2 pt-2">
+              <button onclick="inspectJoint('cartilago')" class="text-xs py-1.5 px-2 rounded-lg bg-gray-100 hover:bg-accent hover:text-white border border-gray-200 text-gray-700 font-medium transition">Cartílago Hialino</button>
+              <button onclick="inspectJoint('liquido')" class="text-xs py-1.5 px-2 rounded-lg bg-gray-100 hover:bg-accent hover:text-white border border-gray-200 text-gray-700 font-medium transition">Líquido Sinovial</button>
+              <button onclick="inspectJoint('capsula')" class="text-xs py-1.5 px-2 rounded-lg bg-gray-100 hover:bg-accent hover:text-white border border-gray-200 text-gray-700 font-medium transition">Cápsula Fibrosa</button>
+              <button onclick="inspectJoint('membrana')" class="text-xs py-1.5 px-2 rounded-lg bg-gray-100 hover:bg-accent hover:text-white border border-gray-200 text-gray-700 font-medium transition">Membrana Sinovial</button>
+              <button onclick="inspectJoint('ligamentos')" class="col-span-2 text-xs py-1.5 px-2 rounded-lg bg-gray-100 hover:bg-accent hover:text-white border border-gray-200 text-gray-700 font-medium transition">Ligamentos & Meniscos</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- MODULO 3: MÚSCULOS Y HISTOLOGÍA MUSCULAR -->
+    <!-- ========================================== -->
+    <section id="mod-muscular" class="module-tab hidden space-y-8 animate-fadeIn">
+      <div class="relative overflow-hidden rounded-2xl bg-white border border-gray-200 p-6 md:p-8 shadow-xl">
+        <div class="relative z-10 max-w-3xl space-y-2">
+          <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-rose-500/10 border border-rose-500/20 text-rose-700 text-xs font-semibold">
+            <span>Módulo 3</span> • <span>Histología de los Tejidos Contráciles</span>
+          </div>
+          <h2 class="text-xl sm:text-2xl font-bold text-gray-900">
+            Músculos: Envolturas Conectivas y Ultraestructura
+          </h2>
+          <p class="text-gray-700 text-sm leading-relaxed">
+            El tejido muscular transforma energía química ($\text{ATP}$) en trabajo mecánico y calor. Conoce la histología diferencial de las tres variedades musculares y la organización sarcomérica microscópica.
+          </p>
+        </div>
+      </div>
+
+      <!-- Comparador Histológico de los Tres Tejidos Musculares -->
+      <div class="space-y-4">
+        <h3 class="text-base sm:text-lg font-bold text-gray-900 flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span>
+          3.1 Cuadro Comparativo Histológico y Funcional
+        </h3>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <!-- 1. Esquelético -->
+          <div class="bg-white border border-rose-900/50 rounded-2xl p-5 space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-xs uppercase font-mono px-2 py-0.5 rounded bg-rose-50 text-rose-800 border border-rose-200 border border-rose-800">Voluntario</span>
+              <span class="text-xs text-rose-700 font-mono">SNC Somático</span>
+            </div>
+            <h4 class="text-base font-bold text-gray-900">Estriado Esquelético</h4>
+            <p class="text-xs text-gray-700 leading-relaxed">
+              Células cilíndricas gigantes (hasta 30 cm de longitud) sincitiales, <strong class="text-gray-900">multinucleadas periféricas</strong> (núcleos desplazados inmediatamente debajo del sarcolema).
+            </p>
+            <div class="bg-gray-50 p-3 rounded-xl border border-gray-200 text-xs space-y-1.5 text-gray-700">
+              <div><strong class="text-rose-700">Estriaciones:</strong> Sarcómeros patentes y alineados en fase.</div>
+              <div><strong class="text-rose-700">Contracción:</strong> Rápida, vigorosa y bajo control voluntario.</div>
+              <div><strong class="text-rose-700">Ubicación:</strong> Músculos motores del sistema locomotor, lengua, faringe y diafragma.</div>
+            </div>
+          </div>
+
+          <!-- 2. Cardíaco -->
+          <div class="bg-white border border-gray-200 rounded-2xl p-5 space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-xs uppercase font-mono px-2 py-0.5 rounded bg-sky-50 text-sky-800 border border-sky-200 border border-sky-800">Involuntario</span>
+              <span class="text-xs text-sky-700 font-mono">Marcapasos / SNA</span>
+            </div>
+            <h4 class="text-base font-bold text-gray-900">Estriado Cardíaco</h4>
+            <p class="text-xs text-gray-700 leading-relaxed">
+              Células cortas y <strong class="text-gray-900">ramificadas</strong> con uno o dos núcleos ovoides centrales. Se anastomosan en red mediante <strong class="text-sky-700">discos intercalares</strong>.
+            </p>
+            <div class="bg-gray-50 p-3 rounded-xl border border-gray-200 text-xs space-y-1.5 text-gray-700">
+              <div><strong class="text-sky-700">Discos Intercalares:</strong> Desmosomas (resistencia mecánica) + Uniones GAP (acoplamiento eléctrico sincitial).</div>
+              <div><strong class="text-sky-700">Contracción:</strong> Rítmica, automática, no tetanizable.</div>
+              <div><strong class="text-sky-700">Ubicación:</strong> Miocardio del corazón y pared proximal de grandes venas.</div>
+            </div>
+          </div>
+
+          <!-- 3. Liso -->
+          <div class="bg-white border border-gray-200 rounded-2xl p-5 space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-xs uppercase font-mono px-2 py-0.5 rounded bg-amber-50 text-amber-800 font-bold border border-amber-800">Involuntario</span>
+              <span class="text-xs text-amber-800 font-mono">SNA Autónomo</span>
+            </div>
+            <h4 class="text-base font-bold text-gray-900">Músculo Liso</h4>
+            <p class="text-xs text-gray-700 leading-relaxed">
+              Células <strong class="text-gray-900">fusiformes</strong> alargadas con un solo núcleo central alargado en "habano". <strong class="text-amber-800 font-bold">Carece de sarcómeros y estriaciones</strong>.
+            </p>
+            <div class="bg-gray-50 p-3 rounded-xl border border-gray-200 text-xs space-y-1.5 text-gray-700">
+              <div><strong class="text-amber-800">Aparato Contráctil:</strong> Cuerpos densos citoplasmáticos (análogos a líneas Z) con filamentos de actina y miosina oblicuos; usa calmodulina en vez de troponina.</div>
+              <div><strong class="text-amber-800">Contracción:</strong> Lenta, sostenida, resistente a la fatiga (tono).</div>
+              <div><strong class="text-amber-800">Ubicación:</strong> Vasos sanguíneos, tubo digestivo, útero y vías respiratorias.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Organización Macroscópica y Envolturas Conectivas -->
+      <div class="bg-white border border-gray-200 rounded-2xl p-6 space-y-4">
+        <h3 class="text-base font-bold text-gray-900 flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span>
+          3.2 Transmisión de Fuerza Mecánica: De la Fibra al Tendón
+        </h3>
+        <p class="text-xs text-gray-700 leading-relaxed">
+          La fuerza de contracción generada a nivel microscópico se transmite en serie y en paralelo al esqueleto mediante tres capas continuas de tejido conectivo que se condensan en los extremos musculares formando el <strong class="text-gray-900">tendón</strong>:
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="bg-gray-50 p-4 rounded-xl border border-gray-200">
+            <span class="text-xs font-mono font-bold text-rose-700 block mb-1">1. Endomisio</span>
+            <p class="text-xs text-gray-700 leading-relaxed">
+              Fina vaina de fibras reticulares (colágeno III) que envuelve a <strong class="text-gray-900">cada fibra muscular individual</strong>. Aloja capilares nutricios y las células satélite (células madre miogénicas).
+            </p>
+          </div>
+          <div class="bg-gray-50 p-4 rounded-xl border border-gray-200">
+            <span class="text-xs font-mono font-bold text-sky-700 block mb-1">2. Perimisio</span>
+            <p class="text-xs text-gray-700 leading-relaxed">
+              Capa de tejido conectivo más densa que agrupa a varias fibras en un <strong class="text-gray-900">fascículo muscular</strong>. Contiene vasos de mayor calibre y los husos neuromusculares propioceptivos.
+            </p>
+          </div>
+          <div class="bg-gray-50 p-4 rounded-xl border border-gray-200">
+            <span class="text-xs font-mono font-bold text-amber-800 block mb-1">3. Epimisio</span>
+            <p class="text-xs text-gray-700 leading-relaxed">
+              Fuerte envoltura de tejido conectivo denso irregular que rodea la <strong class="text-gray-900">totalidad del vientre muscular</strong>. Se continúa con la fascia profunda y se inserta en el periostio óseo a través del tendón.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ultraestructura del Sarcómero: Bandas, Líneas y Filamentos -->
+      <div class="bg-white border border-gray-200 rounded-2xl p-6 space-y-6">
+        <div>
+          <h3 class="text-base sm:text-lg font-bold text-gray-900 flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-rose-400"></span>
+            3.3 Ultraestructura del Sarcómero
+          </h3>
+          <p class="text-xs text-gray-700 mt-1">
+            El sarcómero es la <strong class="text-rose-700">unidad funcional mínima contráctil</strong> de la miofibrilla, delimitada anatómicamente entre dos líneas Z consecutivas (longitud en reposo: ~$2.2\\,\\mu\\text{m}$).
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+          <div class="bg-gray-50 p-4 rounded-xl border border-gray-200 space-y-2">
+            <span class="text-xs font-bold text-sky-700 uppercase font-mono">Filamentos Finos (~7 nm)</span>
+            <ul class="text-xs text-gray-700 space-y-1.5">
+              <li>• <strong class="text-gray-900">Actina F:</strong> Polímero en doble hélice de monómeros de actina G con sitios de unión a miosina.</li>
+              <li>• <strong class="text-gray-900">Tropomiosina:</strong> Filamento alargado que en reposo ocluye físicamente los sitios activos de la actina.</li>
+              <li>• <strong class="text-gray-900">Complejo Troponina:</strong> Heterotrímero: <em>TnT</em> (une tropomiosina), <em>TnI</em> (inhibitoria), y <em>TnC</em> (sensor con 4 sitios de fijación para $\text{Ca}^{2+}$).</li>
+            </ul>
+          </div>
+
+          <div class="bg-gray-50 p-4 rounded-xl border border-gray-200 space-y-2">
+            <span class="text-xs font-bold text-rose-700 uppercase font-mono">Filamentos Gruesos (~15 nm)</span>
+            <ul class="text-xs text-gray-700 space-y-1.5">
+              <li>• <strong class="text-gray-900">Miosina II:</strong> Dímero de colas entrelazadas y dos cabezas globulares.</li>
+              <li>• <strong class="text-gray-900">Cabeza de Miosina:</strong> Posee actividad enzimática <strong class="text-amber-800 font-bold">ATPasa</strong> y el sitio de unión a la actina para la generación del golpe de fuerza motriz.</li>
+              <li>• <strong class="text-gray-900">Titina:</strong> Proteína gigante elástica que ancla la miosina a la línea Z impidiendo la sobredistensión.</li>
+            </ul>
+          </div>
+
+          <div class="bg-gray-50 p-4 rounded-xl border border-gray-200 space-y-2">
+            <span class="text-xs font-bold text-amber-800 uppercase font-mono">Bandas y Zonas Clave</span>
+            <ul class="text-xs text-gray-700 space-y-1.5">
+              <li>• <strong class="text-gray-900">Línea Z:</strong> Disco proteico (alfa-actinina) que ancla los filamentos finos delimitando el sarcómero.</li>
+              <li>• <strong class="text-gray-900">Banda A (Anisótropa):</strong> Longitud completa de filamentos de miosina. <span class="text-emerald-700 font-bold">¡NO cambia de longitud durante la contracción!</span></li>
+              <li>• <strong class="text-gray-900">Banda I (Isótropa):</strong> Región de filamentos finos puros sin solapamiento. Se estrecha en la contracción.</li>
+              <li>• <strong class="text-gray-900">Zona H:</strong> Centro de la banda A con miosina pura. Se oblitera en contracción máxima.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- MODULO 4: FISIOLOGÍA DE LA CONTRACCIÓN MUSCULAR -->
+    <!-- ========================================== -->
+    <section id="mod-contraccion" class="module-tab hidden space-y-8 animate-fadeIn">
+      <div class="relative overflow-hidden rounded-2xl bg-white border border-gray-200 p-6 md:p-8 shadow-xl">
+        <div class="relative z-10 max-w-3xl space-y-2">
+          <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-rose-500/10 border border-rose-500/20 text-rose-700 text-xs font-semibold">
+            <span>Módulo 4</span> • <span>Biofísica & Acoplamiento Excitación-Contracción</span>
+          </div>
+          <h2 class="text-xl sm:text-2xl font-bold text-gray-900">
+            Fisiología de la Contracción: Teoría del Deslizamiento
+          </h2>
+          <p class="text-gray-700 text-sm leading-relaxed">
+            La contracción muscular no ocurre por encogimiento de los filamentos, sino por el <strong class="text-rose-700">deslizamiento activo de los filamentos finos sobre los gruesos</strong>, impulsado por puentes cruzados dependientes de $\text{Ca}^{2+}$ y la hidrólisis de $\text{ATP}$.
+          </p>
+        </div>
+      </div>
+
+      <!-- SIMULADOR INTERACTIVO DEL SARCÓMERO -->
+      <div class="bg-white border border-gray-200 rounded-2xl p-6 space-y-5">
+        <div class="flex flex-wrap items-center justify-between gap-4 pb-3 border-b border-gray-200">
+          <div>
+            <h3 class="text-base sm:text-lg font-bold text-gray-900 flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span>
+              Simulador Dinámico de Deslizamiento Sarcomérico
+            </h3>
+            <p class="text-xs text-gray-600">Mueve el control para observar la variación de las Bandas I, H y la distancia entre líneas Z</p>
+          </div>
+
+          <!-- Slider de Contracción -->
+          <div class="flex items-center space-x-3 bg-gray-50 px-4 py-2 rounded-xl border border-gray-200">
+            <span class="text-xs font-mono text-gray-600">Relajado (0%)</span>
+            <input id="contractionSlider" type="range" min="0" max="100" value="10" oninput="updateSarcomere(this.value)" class="w-36 sm:w-48 h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-rose-500">
+            <span class="text-xs font-mono text-rose-700 font-bold">Contraído (100%)</span>
+          </div>
+        </div>
+
+        <!-- Canvas Gráfico del Sarcómero -->
+        <div class="bg-white rounded-xl p-4 border border-gray-200 shadow-sm overflow-hidden flex flex-col items-center">
+          <canvas id="sarcomereCanvas" width="850" height="260" class="w-full max-w-4xl h-auto select-none"></canvas>
+
+          <!-- Marcadores de estado en tiempo real -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 w-full max-w-4xl mt-4 text-xs font-mono">
+            <div class="bg-white p-2.5 rounded-lg border border-gray-200 text-center">
+              <span class="text-gray-600 block text-[10px]">Distancia Líneas Z</span>
+              <span id="label-z-dist" class="text-sm font-bold text-rose-700">2.60 µm</span>
+            </div>
+            <div class="bg-white p-2.5 rounded-lg border border-gray-200 text-center">
+              <span class="text-gray-600 block text-[10px]">Longitud Banda A</span>
+              <span class="text-sm font-bold text-sky-700">1.60 µm (Constante)</span>
+            </div>
+            <div class="bg-white p-2.5 rounded-lg border border-gray-200 text-center">
+              <span class="text-gray-600 block text-[10px]">Ancho Banda I</span>
+              <span id="label-i-band" class="text-sm font-bold text-amber-800">1.00 µm</span>
+            </div>
+            <div class="bg-white p-2.5 rounded-lg border border-gray-200 text-center">
+              <span class="text-gray-600 block text-[10px]">Ancho Zona H</span>
+              <span id="label-h-zone" class="text-sm font-bold text-emerald-700">0.50 µm</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Secuencia Paso a Paso del Acoplamiento Excitación-Contracción -->
+      <div class="bg-white border border-gray-200 rounded-2xl p-6 space-y-6">
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <div>
+            <h3 class="text-base sm:text-lg font-bold text-gray-900 flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span>
+              4.2 Cascada Molecular del Acoplamiento Excitación-Contracción
+            </h3>
+            <p class="text-xs text-gray-700 mt-1">Explora cada una de las 5 fases obligatorias descritas por la fisiología médica</p>
+          </div>
+          <!-- Controles de navegación del paso a paso -->
+          <div class="flex items-center space-x-2">
+            <button onclick="prevStep()" class="px-3 py-1.5 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-800 text-xs font-semibold border border-gray-300 transition">← Anterior</button>
+            <span id="stepCounter" class="text-xs font-mono text-sky-700 px-2">Paso 1 de 5</span>
+            <button onclick="nextStep()" class="px-3 py-1.5 rounded-lg bg-accent hover:bg-accent-hover text-white text-xs font-semibold shadow-sm transition">Siguiente →</button>
+          </div>
+        </div>
+
+        <!-- Tarjetas de Pasos -->
+        <div class="grid grid-cols-1 md:grid-cols-5 gap-3" id="stepsCardsContainer">
+          <!-- Paso 1 -->
+          <div id="step-card-1" onclick="goToStep(1)" class="cursor-pointer bg-gray-50 p-4 rounded-xl border-2 border-sky-500 transition-all">
+            <div class="flex items-center justify-between text-xs font-mono font-bold text-sky-700 mb-1">
+              <span>Paso 1</span>
+              <span><i class="fa-solid fa-bolt text-amber-500"></i></span>
+            </div>
+            <h5 class="font-bold text-gray-900 text-xs">Unión Neuromuscular</h5>
+            <p class="text-[11px] text-gray-600 mt-1 leading-snug">
+              Potencial de acción en motoneurona alfa libera $\text{ACh}$ en la hendidura sináptica.
+            </p>
+          </div>
+
+          <!-- Paso 2 -->
+          <div id="step-card-2" onclick="goToStep(2)" class="cursor-pointer bg-gray-50 p-4 rounded-xl border border-gray-200 opacity-60 transition-all">
+            <div class="flex items-center justify-between text-xs font-mono font-bold text-sky-700 mb-1">
+              <span>Paso 2</span>
+              <span><i class="fa-solid fa-wave-square text-sky-500"></i></span>
+            </div>
+            <h5 class="font-bold text-gray-900 text-xs">Túbulos T & $\text{Ca}^{2+}$</h5>
+            <p class="text-[11px] text-gray-600 mt-1 leading-snug">
+              Despolarización viaja por túbulos T; receptores $\text{DHPR/RyR1}$ liberan $\text{Ca}^{2+}$ masivo del RS.
+            </p>
+          </div>
+
+          <!-- Paso 3 -->
+          <div id="step-card-3" onclick="goToStep(3)" class="cursor-pointer bg-gray-50 p-4 rounded-xl border border-gray-200 opacity-60 transition-all">
+            <div class="flex items-center justify-between text-xs font-mono font-bold text-amber-800 mb-1">
+              <span>Paso 3</span>
+              <span><i class="fa-solid fa-lock-open text-amber-500"></i></span>
+            </div>
+            <h5 class="font-bold text-gray-900 text-xs">Troponina & Tropomiosina</h5>
+            <p class="text-[11px] text-gray-600 mt-1 leading-snug">
+              El $\text{Ca}^{2+}$ se une a TnC; cambio alostérico destapa sitios activos de actina.
+            </p>
+          </div>
+
+          <!-- Paso 4 -->
+          <div id="step-card-4" onclick="goToStep(4)" class="cursor-pointer bg-gray-50 p-4 rounded-xl border border-gray-200 opacity-60 transition-all">
+            <div class="flex items-center justify-between text-xs font-mono font-bold text-rose-700 mb-1">
+              <span>Paso 4</span>
+              <span><i class="fa-solid fa-bolt text-rose-500"></i></span>
+            </div>
+            <h5 class="font-bold text-gray-900 text-xs">Golpe de Fuerza (Cross-Bridge)</h5>
+            <p class="text-[11px] text-gray-600 mt-1 leading-snug">
+              Liberación de $\text{P}_i$ y $\text{ADP}$; la cabeza bascula 45° arrastrando el filamento fino.
+            </p>
+          </div>
+
+          <!-- Paso 5 -->
+          <div id="step-card-5" onclick="goToStep(5)" class="cursor-pointer bg-gray-50 p-4 rounded-xl border border-gray-200 opacity-60 transition-all">
+            <div class="flex items-center justify-between text-xs font-mono font-bold text-emerald-700 mb-1">
+              <span>Paso 5</span>
+              <span><i class="fa-solid fa-arrows-rotate text-emerald-500"></i></span>
+            </div>
+            <h5 class="font-bold text-gray-900 text-xs">Recaptura & Relajación</h5>
+            <p class="text-[11px] text-gray-600 mt-1 leading-snug">
+              Unión de nuevo $\text{ATP}$ disocia el puente; bomba $\text{SERCA}$ bombea $\text{Ca}^{2+}$ al RS.
+            </p>
+          </div>
+        </div>
+
+        <!-- Detalle Ampliado del Paso Seleccionado -->
+        <div id="stepDetailBox" class="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm space-y-3">
+          <div class="flex items-center space-x-2 text-xs font-mono text-sky-700">
+            <span class="px-2 py-0.5 rounded bg-sky-50 border border-sky-200" id="step-badge">Fase 1: Transmisión Sináptica</span>
+          </div>
+          <h4 id="step-detail-title" class="text-base font-bold text-gray-900">Unión Neuromuscular y Activación del Sarcolema</h4>
+          <p id="step-detail-desc" class="text-xs sm:text-sm text-gray-700 leading-relaxed">
+            El potencial de acción llega al terminal axónico presináptico de la motoneurona alfa somática, abriendo canales de $\text{Ca}^{2+}$ dependientes de voltaje. La entrada de calcio induce la exocitosis de vesículas con <strong class="text-sky-700">acetilcolina ($\text{ACh}$)</strong> hacia la hendidura sináptica. La $\text{ACh}$ se une a receptores nicotínicos postsinápticos ($\text{nAChR}$) en la placa motora terminal, provocando un flujo masivo de $\text{Na}^+$ hacia el interior celular generando el <strong class="text-gray-900">Potencial de Placa Terminal (PPT)</strong>.
+          </p>
+          <div id="step-detail-formula" class="bg-white p-3 rounded-lg text-xs font-mono text-gray-700 border-l-4 border-sky-500">
+            Ecuación clave: Despolarización local $\to$ Apertura de canales de $\text{Na}^+_V$ en el sarcolema $\to$ Propagación del Potencial de Acción muscular bidireccional.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    </div>
+  </main>
+
+  <!-- Modal Tutorial / Guía de Uso -->
+  <div id="tutorial-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-2xl max-w-2xl w-full p-6 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto custom-scroll">
+      <div class="flex items-center justify-between border-b border-gray-100 pb-3">
+        <div class="flex items-center gap-2">
+          <span class="w-3 h-3 rounded-full bg-accent"></span>
+          <h3 class="text-base font-bold text-gray-900 uppercase tracking-wide">Guía de Uso del Simulador</h3>
+        </div>
+        <button onclick="closeTutorial()" class="text-gray-400 hover:text-gray-600 text-xl font-bold">&times;</button>
+      </div>
+      
+      <div class="space-y-4 text-xs text-gray-600 leading-relaxed">
+        <div class="bg-accent-light p-3.5 rounded-xl border border-accent/20">
+          <span class="font-bold text-accent text-xs block mb-1">Propósito Pedagógico (Curso de Ingreso a Medicina - UCCuyo):</span>
+          Este simulador interactivo entrena al estudiante en los cuatro pilares morfológicos, histológicos y biofísicos del <strong>Sistema Locomotor (Osteoartromuscular)</strong> requeridos para el examen de admisión médica: comprender la fisiología dinámica y el metabolismo mineral del tejido óseo, clasificar y explorar las articulaciones sinoviales, contrastar las variedades de tejido muscular y dominar la cascada del acoplamiento excitación-contracción con hidrólisis de ATP.
+        </div>
+
+        <div>
+          <h4 class="font-bold text-gray-900 text-sm mb-1 text-accent">1. Módulo 1: Tejido Óseo y Dinámica del Esqueleto</h4>
+          <ul class="list-disc list-inside space-y-1.5 ml-1 text-gray-600">
+            <li><strong>Funciones Biomecánicas y Metabólicas:</strong> Explore las 6 funciones capitales del hueso: sostén estructural, palanca biomecánica multiplicadora de fuerza, protección visceral crítica (neurocráneo, tórax y canal raquídeo), hematopoyesis en médula ósea roja, reserva lipídica en médula ósea amarilla diafisaria y homeostasis mineral de $\text{Ca}^{2+}$ y $\text{P}$ (regulada por la Parathormona hipercalcemiante y la Calcitonina hipocalcemiante).</li>
+            <li><strong>Anatomía Macroscópica del Hueso Largo:</strong> Interactúe con el diagrama anatómico del fémur haciendo clic sobre sus regiones clave: epífisis proximal y distal (hueso esponjoso trabecular con cartílago articular hialino), diáfisis tubular resistente, placa epifisaria (cartílago de crecimiento metafisario), cavidad medular axial y la membrana fibro-osteógena del periostio inervada por fibras nociceptivas.</li>
+            <li><strong>Histología: Osteona (Sistema de Havers) vs. Hueso Esponjoso:</strong> Examine la micrografía virtual concéntrica del hueso compacto con su conducto de Havers central (arteriola, vénula y nervio), conductos perforantes de Volkmann, laminillas concéntricas de matriz calcificada, lagunas óseas y canalículos con uniones GAP entre osteocitos. Compare su arquitectura frente a las trabéculas y líneas de tensión según la Ley de Wolff del hueso esponjoso.</li>
+            <li><strong>Líneas Celulares y Remodelación Ósea:</strong> Analice las 4 estirpes celulares óseas: células osteoprogenitoras mesenquimáticas, osteoblastos formadores de osteoide rico en colágeno I y fosfatasa alcalina, osteocitos mecanosensores maduros y osteoclastos gigantes multinucleados de origen hematopoyético mieloide encargados de la resorción ósea por secreción ácida y catepsina K.</li>
+            <li><strong>Mecanismos de Osificación:</strong> Diferencie la osificación intramembranosa (huesos planos del cráneo sobre mesénquima embrionario) de la osificación endocondral (huesos largos a partir de un molde previo de cartílago hialino).</li>
+            <li><strong>División del Esqueleto Humano (206 Huesos):</strong> Desglose el esqueleto axial (80 huesos: cráneo 22, huesecillos del oído 6, hioides 1, columna vertebral 26 y caja torácica 25) y el esqueleto apendicular (126 huesos: cintura escapular 4, miembros superiores 60, cintura pélvica 2 y miembros inferiores 60), con su clasificación morfológica (largos, cortos, planos, irregulares y sesamoideos).</li>
+          </ul>
+        </div>
+        
+        <div>
+          <h4 class="font-bold text-gray-900 text-sm mb-1 text-accent">2. Módulo 2: Articulaciones y Biomecánica</h4>
+          <ul class="list-disc list-inside space-y-1.5 ml-1 text-gray-600">
+            <li><strong>Clasificación Dual (Estructural y Funcional):</strong> Domine la matriz comparativa médica:
+              <ul class="list-circle list-inside ml-4 mt-1 space-y-1 text-gray-600">
+                <li><em>Fibrosas / Sinartrosis (Inmóviles):</em> Suturas craneales con sinostosis tardía, sindesmosis interóseas y gónfosis dentoalveolares.</li>
+                <li><em>Cartilaginosas / Anfiartrosis (Semimóviles):</em> Sincondrosis de cartílago hialino y sínfisis de fibrocartílago (discos intervertebrales y sínfisis del pubis).</li>
+                <li><em>Sinoviales / Diartrosis (Móviles):</em> Dotadas de cavidad articular y líquido lubricante con amplia libertad cinemática.</li>
+              </ul>
+            </li>
+            <li><strong>Microanatomía Interactiva de la Diartrosis:</strong> Haga clic sobre los componentes del diagrama articular para examinar el cartílago articular hialino avascular y alinfático, la cavidad con líquido sinovial rico en ácido hialurónico y lubricina, la cápsula fibrosa externa, la membrana sinovial con sinoviocitos fagocíticos (tipo A) y secretores (tipo B), y los ligamentos extrínsecos/intrínsecos de refuerzo.</li>
+          </ul>
+        </div>
+        
+        <div>
+          <h4 class="font-bold text-gray-900 text-sm mb-1 text-accent">3. Módulo 3: Histología Muscular y Ultraestructura</h4>
+          <ul class="list-disc list-inside space-y-1.5 ml-1 text-gray-600">
+            <li><strong>Cuadro Comparativo de los Tres Tejidos Musculares:</strong>
+              <ul class="list-circle list-inside ml-4 mt-1 space-y-1 text-gray-600">
+                <li><em>Estriado Esquelético:</em> Células cilíndricas sincitiales multinucleadas periféricas, estriaciones sarcoméricas visibles, inervación somática voluntaria.</li>
+                <li><em>Estriado Cardíaco:</em> Células ramificadas mononucleadas/binucleadas centrales, discos intercalares con desmosomas y uniones comunicantes GAP, automatismo rítmico involuntario.</li>
+                <li><em>Músculo Liso:</em> Células fusiformes uninucleadas centrales sin estriaciones, cuerpos densos citoplasmáticos, inervación autónoma involuntaria visceral.</li>
+              </ul>
+            </li>
+            <li><strong>Transmisión Mecánica y Envolturas Conectivas:</strong> Examine la continuidad estromal desde la fibra muscular envuelta por endomisio (colágeno III con células satélite), el fascículo rodeado por perimisio, y el músculo íntegro cubierto por epimisio hasta insertarse en el periostio a través del tendón.</li>
+            <li><strong>Ultraestructura Molecular del Sarcómero:</strong> Estudie la arquitectura delimitada entre dos líneas Z consecutivas: filamentos finos (actina F bicatenaria, tropomiosina filamentosa y complejo troponina TnT/TnI/TnC), filamentos gruesos (miosina II con cabezas globulares y actividad ATPasa), titina elástica y la delimitación de Banda A (anisótropa, constante), Banda I (isótropa pura) y Zona H.</li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="font-bold text-gray-900 text-sm mb-1 text-accent">4. Módulo 4: Fisiología de la Contracción Muscular</h4>
+          <ul class="list-disc list-inside space-y-1.5 ml-1 text-gray-600">
+            <li><strong>Simulador Biofísico del Sarcómero en Tiempo Real:</strong> Modifique el control deslizante de contracción (0% a 100%) para visualizar en el lienzo dinámico Canvas la teoría del filamento deslizante de Huxley: compruebe cómo la Banda A conserva una longitud invariable ($1.60\,\mu\text{m}$), mientras la distancia entre líneas Z disminuye de $2.60\,\mu\text{m}$ a $1.80\,\mu\text{m}$, estrechando progresivamente la Banda I y obliterando la Zona H central.</li>
+            <li><strong>Cascada Molecular del Acoplamiento Excitación-Contracción (5 Pasos):</strong>
+              <ul class="list-circle list-inside ml-4 mt-1 space-y-1 text-gray-600">
+                <li><em>Paso 1 (Transmisión Sináptica):</em> Arribo del potencial de acción axónico y exocitosis de $\text{ACh}$ en la placa motora generando el potencial de placa terminal.</li>
+                <li><em>Paso 2 (Conducción Tubular y Liberación de $\text{Ca}^{2+}$):</em> Despolarización por túbulos T, acoplamiento DHPR/RyR1 y salida explosiva de $\text{Ca}^{2+}$ desde las cisternas del retículo sarcoplásmico.</li>
+                <li><em>Paso 3 (Alosterismo Regulatorio):</em> Fijación de $\text{Ca}^{2+}$ a la Troponina C, tracción de la tropomiosina y exposición de los sitios activos de la actina.</li>
+                <li><em>Paso 4 (Ciclo del Puente Cruzado - Golpe de Fuerza):</em> Acoplamiento de la cabeza de miosina energizada, liberación de $\text{P}_i$ y $\text{ADP}$, y basculación de 45° que tracciona el filamento fino hacia la línea M.</li>
+                <li><em>Paso 5 (Disociación y Relajación por SERCA):</em> Fijación de una nueva molécula de $\text{ATP}$ para desacoplar el puente (prevención de rigor mortis) y recaptura activa de $\text{Ca}^{2+}$ al retículo mediante bombas dependientes de ATP SERCA.</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="pt-3 border-t border-gray-100 flex justify-end">
+        <button onclick="closeTutorial()" class="px-5 py-2 bg-accent text-white text-xs font-semibold rounded-xl hover:bg-accent-hover transition shadow-sm">
+          Entendido
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pie de Página Institucional Obligatorio -->
+  <footer class="bg-white border-t border-gray-200 py-4 mt-8 text-center text-xs text-gray-500">
+    Desarrollado por vesalio - Todos los derechos reservados
+  </footer>
+<script>
+    function openTutorial() {
+      document.getElementById('tutorial-modal').classList.remove('hidden');
+      renderKaTeXMath();
+    }
+    function closeTutorial() {
+      document.getElementById('tutorial-modal').classList.add('hidden');
+    }
+
+    // Tab switching system
+    function switchTab(tabId) {
+    document.querySelectorAll('.module-tab').forEach(el => el.classList.add('hidden'));
+    const activeTab = document.getElementById(tabId);
+    if (activeTab) activeTab.classList.remove('hidden');
+
+    // Update navigation button active state
+    document.querySelectorAll('.nav-btn').forEach(btn => {
+      btn.classList.remove('bg-accent', 'text-white', 'shadow-sm', 'font-semibold');
+      btn.classList.add('text-gray-700', 'hover:bg-gray-100', 'font-medium');
+    });
+
+    const activeBtn = document.getElementById(`tab-btn-${tabId}`);
+    if (activeBtn) {
+      activeBtn.classList.remove('text-gray-700', 'hover:bg-gray-100', 'font-medium');
+      activeBtn.classList.add('bg-accent', 'text-white', 'shadow-sm', 'font-semibold');
+    }
+
+    renderKaTeXMath();
+
+    if (tabId === 'mod-contraccion') {
+      setTimeout(initSarcomereCanvas, 50);
+    }
+  }
+
+    // Toast helper
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      const text = document.getElementById('toast-text');
+      if (!toast || !text) return;
+      text.innerHTML = msg;
+      toast.classList.remove('translate-y-20', 'opacity-0');
+      setTimeout(() => {
+        toast.classList.add('translate-y-20', 'opacity-0');
+      }, 3500);
+    }
+
+    // Bone Explorer data
+    const bonePartsData = {
+      'epifisis-prox': {
+        tag: 'Epífisis Proximal',
+        title: 'Epífisis Proximal y Cartílago Hialino',
+        desc: 'Extremo ensanchado superior. Formado predominantemente por hueso esponjoso trabecular que aloja médula ósea roja hematopoyética, rodeado por una fina cortical de hueso compacto y revestido por cartílago articular en su superficie de fricción.',
+        clinical: 'Las fracturas intraarticulares epifisarias comprometen la congruencia articular y predisponen a artrosis postraumática precoz si no se reducen anatómicamente.'
+      },
+      'epifisis-dist': {
+        tag: 'Epífisis Distal',
+        title: 'Epífisis Distal y Cóndilos',
+        desc: 'Extremo ensanchado inferior diseñado para transmitir el peso corporal a la articulación adyacente. Su geometría expandida disipa las tensiones axiales por unidad de superficie.',
+        clinical: 'En el fémur distal y tibia proximal, las trabéculas se orientan siguiendo las líneas de fuerza gravitatoria bipodálica.'
+      },
+      'diafisis': {
+        tag: 'Diáfisis',
+        title: 'Diáfisis (Cuerpo Tubular del Hueso)',
+        desc: 'Cilindro hueco compuesto por una gruesa cortical de hueso compacto (sistemas de Havers) que proporciona máxima resistencia a las fuerzas de flexión y torsión con el menor peso biológico posible.',
+        clinical: 'Posee el foramen nutricio por donde penetran las arterias nutricias diafisarias hacia la cavidad medular.'
+      },
+      'placa': {
+        tag: 'Placa Epifisaria / Metáfisis',
+        title: 'Placa Epifisaria (Cartílago de Crecimiento)',
+        desc: 'Capa de cartílago hialino situada entre la epífisis y la diáfisis en niños y adolescentes. Permite el crecimiento longitudinal del hueso mediante proliferación e hipertrofia de condrocitos seguida de calcificación y osificación endocondral.',
+        clinical: 'Al alcanzar la madurez esquelética (estimulada por estrógenos y andrógenos), la placa se osifica por completo dejando la "línea epifisaria" radiológica.'
+      },
+      'cavidad': {
+        tag: 'Cavidad Medular',
+        title: 'Cavidad Medular Diafisaria',
+        desc: 'Túnel hueco axial en el interior de la diáfisis revestido por el endostio. En adultos contiene la médula ósea amarilla rica en triglicéridos y adipocitos de reserva energética.',
+        clinical: 'En anemias hemolíticas graves o hipoxia crónica severa, la médula amarilla puede reconvertirse parcialmente en médula roja hematopoyética activa.'
+      },
+      'periostio': {
+        tag: 'Periostio',
+        title: 'Periostio (Vaina Fibro-Osteógena)',
+        desc: 'Membrana fibroconectiva externa de dos capas: una externa fibrosa (colágeno resistente con fibras de Sharpey que la anclan al hueso) y una interna celular osteogénica (células osteoprogenitoras y osteoblastos).',
+        clinical: 'Es intensamente inervado por fibras nociceptivas somáticas, siendo el principal responsable del dolor agudo en fracturas óseas.'
+      },
+      'cartilago': {
+        tag: 'Cartílago Articular',
+        title: 'Cartílago Hialino Articular',
+        desc: 'Superficie de contacto pulida de baja fricción que carece de pericondrio, vasos sanguíneos y terminaciones nerviosas. Absorbe impactos mecánicos directos.',
+        clinical: 'Dado que no posee vasos propios, su capacidad de regeneración ante traumatismos o desgaste es extremadamente limitada.'
+      }
+    };
+
+    function selectBonePart(key) {
+      const data = bonePartsData[key];
+      if (!data) return;
+
+      document.getElementById('bone-part-tag').textContent = data.tag;
+      document.getElementById('bone-part-title').textContent = data.title;
+      document.getElementById('bone-part-desc').textContent = data.desc;
+      document.getElementById('bone-part-clinical-text').textContent = data.clinical;
+
+      showToast(`Inspeccionando: <strong>${data.title}</strong>`);
+    }
+
+    // Joint Explorer data
+    const jointData = {
+      'cartilago': {
+        tag: 'Cartílago Articular Hialino',
+        title: 'Cartílago Articular Hialino',
+        desc: 'Revestimiento avascular de 2 a 4 mm de espesor sobre las epífisis. Su matriz extracelular compuesta por colágeno tipo II y grandes proteoglicanos (agrecano) retiene grandes volúmenes de agua, funcionando como una esponja viscosa que absorbe cargas cíclicas.',
+        extra: 'La falta de vasos sanguíneos directos condiciona que su nutrición dependa 100% de la imbibición y expulsión de líquido sinovial durante el movimiento.'
+      },
+      'liquido': {
+        tag: 'Líquido Sinovial',
+        title: 'Líquido Sinovial (Ultrafiltrado + Hialuronato)',
+        desc: 'Fluido viscoso claro o amarillento producido por la membrana sinovial. Contiene ácido hialurónico y lubricina. Cumple tres funciones capitales: lubricación hidrodinámica sin rozamiento, amortiguación de choque mecánico y nutrición condrocitaria.',
+        extra: 'Análisis clínico: El estudio del líquido sinovial por artrocentesis permite diferenciar procesos mecánicos (artrosis), inflamatorios (artritis reumatoide) o infecciosos (artritis séptica).'
+      },
+      'capsula': {
+        tag: 'Cápsula Articular Fibrosa',
+        title: 'Manguito Fibroso Capsular',
+        desc: 'Capa externa resistente de tejido conectivo denso irregular fijada al periostio de ambos huesos. Su flexibilidad tolera el movimiento libre pero su alta resistencia a la tracción previene luxaciones.',
+        extra: 'Contiene abundantes propioceptores (corpúsculos de Ruffini y Pacini) que informan al sistema nervioso central la posición espacial y velocidad de la articulación.'
+      },
+      'membrana': {
+        tag: 'Membrana Sinovial Interna',
+        title: 'Membrana Sinovial y Sinoviocitos',
+        desc: 'Fina capa celular altamente vascularizada que tapiza toda la cara interna de la cápsula excepto el cartílago articular. Posee sinoviocitos tipo A (fagocíticos/macrófagos) y tipo B (fibroblásticos que sintetizan ácido hialurónico y lubricina).',
+        extra: 'En patologías inflamatorias (sinovitis), produce un derrame articular exagerado por hiperemia vascular.'
+      },
+      'ligamentos': {
+        tag: 'Ligamentos & Discos / Meniscos',
+        title: 'Ligamentos de Refuerzo y Estructuras Accesorias',
+        desc: 'Cordones y bandas fibrosas extracapsulares o intracapsulares (ej. ligamentos cruzados de la rodilla) que limitan movimientos anómalos. Los meniscos y rodetes fibrocartilaginosos aumentan la congruencia entre superficies óseas disímiles.',
+        extra: 'Los esguinces corresponden al desgarro o sobredistensión de estos ligamentos tras sobrepasar su límite de deformación elástica.'
+      }
+    };
+
+    function inspectJoint(key) {
+      const d = jointData[key];
+      if (!d) return;
+
+      document.getElementById('joint-tag').textContent = d.tag;
+      document.getElementById('joint-title').textContent = d.title;
+      document.getElementById('joint-desc').textContent = d.desc;
+      document.getElementById('joint-extra').innerHTML = `<strong class="text-sky-700">Relevancia Clínica:</strong> ${d.extra}`;
+      showToast(`Elemento articular: <strong>${d.title}</strong>`);
+    }
+
+    // Sarcomere Canvas Drawing and Dynamic Physics Simulation
+    let sarcomereCanvas = null;
+    let sarcomereCtx = null;
+    let currentContractionPercent = 10;
+
+    function initSarcomereCanvas() {
+      sarcomereCanvas = document.getElementById('sarcomereCanvas');
+      if (!sarcomereCanvas) return;
+      sarcomereCtx = sarcomereCanvas.getContext('2d');
+      drawSarcomere(currentContractionPercent);
+    }
+
+    function updateSarcomere(val) {
+      currentContractionPercent = parseInt(val, 10);
+      drawSarcomere(currentContractionPercent);
+
+      // Biological estimations (in micrometers)
+      // Relaxed sarcomere ~2.6um, fully contracted ~1.8um
+      const zDist = (2.6 - (currentContractionPercent / 100) * 0.8).toFixed(2);
+      // I band narrows from ~1.0um down to ~0.2um
+      const iBand = (1.0 - (currentContractionPercent / 100) * 0.8).toFixed(2);
+      // H zone narrows from ~0.5um down to 0.0um
+      const hZone = Math.max(0, (0.5 - (currentContractionPercent / 100) * 0.5)).toFixed(2);
+
+      const labelZ = document.getElementById('label-z-dist');
+      const labelI = document.getElementById('label-i-band');
+      const labelH = document.getElementById('label-h-zone');
+
+      if (labelZ) labelZ.textContent = `${zDist} µm`;
+      if (labelI) labelI.textContent = `${iBand} µm`;
+      if (labelH) labelH.textContent = `${hZone} µm`;
+    }
+
+    function drawSarcomere(contractionPct) {
+      if (!sarcomereCtx || !sarcomereCanvas) return;
+      const ctx = sarcomereCtx;
+      const w = sarcomereCanvas.width;
+      const h = sarcomereCanvas.height;
+
+      ctx.clearRect(0, 0, w, h);
+
+      // Background styling
+      ctx.fillStyle = '#f8fafc';
+      ctx.fillRect(0, 0, w, h);
+
+      // Center coords
+      const centerX = w / 2;
+      const centerY = h / 2 - 10;
+
+      // Base metrics in pixels
+      // Max half-distance Z-line to center: 340px when relaxed (0%), 210px when 100% contracted
+      const maxHalfZ = 340;
+      const minHalfZ = 210;
+      const halfZ = maxHalfZ - (contractionPct / 100) * (maxHalfZ - minHalfZ);
+
+      const zLeft = centerX - halfZ;
+      const zRight = centerX + halfZ;
+
+      // Thick filament (Myosin) - Banda A width is FIXED (constant)!
+      const myosinHalfWidth = 175; // constant width!
+      const myosinLeft = centerX - myosinHalfWidth;
+      const myosinRight = centerX + myosinHalfWidth;
+
+      // Thin filament (Actin) anchored to Z disc
+      // Fixed actin length
+      const actinLength = 220; 
+
+      // 1. Draw Background Band highlights
+      // Banda A (from myosinLeft to myosinRight)
+      ctx.fillStyle = 'rgba(56, 189, 248, 0.08)';
+      ctx.fillRect(myosinLeft, 30, myosinHalfWidth * 2, 170);
+
+      // Banda I Left (from zLeft to myosinLeft)
+      ctx.fillStyle = 'rgba(234, 179, 8, 0.08)';
+      if (myosinLeft > zLeft) {
+        ctx.fillRect(zLeft, 30, myosinLeft - zLeft, 170);
+      }
+      // Banda I Right (from myosinRight to zRight)
+      if (zRight > myosinRight) {
+        ctx.fillRect(myosinRight, 30, zRight - myosinRight, 170);
+      }
+
+      // Zona H (center space between actin tips)
+      const actinTipLeft = zLeft + actinLength;
+      const actinTipRight = zRight - actinLength;
+      if (actinTipRight > actinTipLeft) {
+        ctx.fillStyle = 'rgba(16, 185, 129, 0.12)';
+        ctx.fillRect(actinTipLeft, 30, actinTipRight - actinTipLeft, 170);
+      }
+
+      // 2. Draw Titin springs (from Z line to Myosin end)
+      ctx.strokeStyle = '#94a3b8';
+      ctx.lineWidth = 1.5;
+      drawSpring(ctx, zLeft, centerY - 25, myosinLeft, centerY - 25, 8);
+      drawSpring(ctx, zLeft, centerY + 25, myosinLeft, centerY + 25, 8);
+      drawSpring(ctx, myosinRight, centerY - 25, zRight, centerY - 25, 8);
+      drawSpring(ctx, myosinRight, centerY + 25, zRight, centerY + 25, 8);
+
+      // 3. Draw Thick Filaments (Miosina II) in center
+      const myosinLevels = [-45, -15, 15, 45];
+      myosinLevels.forEach(yOffset => {
+        const y = centerY + yOffset;
+        // Central thick shaft
+        ctx.strokeStyle = '#ef4444';
+        ctx.lineWidth = 7;
+        ctx.lineCap = 'round';
+        ctx.beginPath();
+        ctx.moveTo(myosinLeft, y);
+        ctx.lineTo(myosinRight, y);
+        ctx.stroke();
+
+        // Myosin heads extending toward actin
+        const numHeads = 14;
+        const step = (myosinHalfWidth * 2 - 30) / numHeads;
+        ctx.fillStyle = '#f87171';
+        for (let i = 0; i < numHeads; i++) {
+          const hx = myosinLeft + 15 + i * step;
+          // Don't draw heads right at the bare M line zone center
+          if (Math.abs(hx - centerX) > 20) {
+            // Top head
+            ctx.beginPath();
+            ctx.arc(hx, y - 6, 2.8, 0, Math.PI * 2);
+            ctx.fill();
+            // Bottom head
+            ctx.beginPath();
+            ctx.arc(hx, y + 6, 2.8, 0, Math.PI * 2);
+            ctx.fill();
+          }
+        }
+      });
+
+      // 4. Draw M Line in exact center
+      ctx.strokeStyle = '#38bdf8';
+      ctx.lineWidth = 2.5;
+      ctx.setLineDash([4, 3]);
+      ctx.beginPath();
+      ctx.moveTo(centerX, 25);
+      ctx.lineTo(centerX, 205);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // 5. Draw Thin Filaments (Actina + Troponina/Tropomiosina) from Z discs
+      const actinLevels = [-60, -30, 0, 30, 60];
+      ctx.strokeStyle = '#38bdf8';
+      ctx.lineWidth = 3.5;
+      actinLevels.forEach(yOffset => {
+        const y = centerY + yOffset;
+        // Left actin filament
+        ctx.beginPath();
+        ctx.moveTo(zLeft, y);
+        ctx.lineTo(zLeft + actinLength, y);
+        ctx.stroke();
+
+        // Right actin filament
+        ctx.beginPath();
+        ctx.moveTo(zRight, y);
+        ctx.lineTo(zRight - actinLength, y);
+        ctx.stroke();
+      });
+
+      // 6. Draw Z Discs (Líneas Z) as zig-zag structures
+      drawZDisc(ctx, zLeft, 25, 205, '#f43f5e');
+      drawZDisc(ctx, zRight, 25, 205, '#f43f5e');
+
+      // 7. Dimension Overlays and Labels
+      ctx.font = '10px Inter, sans-serif';
+      ctx.fillStyle = '#f43f5e';
+      ctx.textAlign = 'center';
+      ctx.fillText('Línea Z', zLeft, 20);
+      ctx.fillText('Línea Z', zRight, 20);
+
+      ctx.fillStyle = '#38bdf8';
+      ctx.fillText('Línea M', centerX, 20);
+
+      // Bottom dimension bracket for Banda A
+      ctx.strokeStyle = '#38bdf8';
+      ctx.lineWidth = 1.2;
+      ctx.beginPath();
+      ctx.moveTo(myosinLeft, 218);
+      ctx.lineTo(myosinRight, 218);
+      ctx.moveTo(myosinLeft, 213);
+      ctx.lineTo(myosinLeft, 223);
+      ctx.moveTo(myosinRight, 213);
+      ctx.lineTo(myosinRight, 223);
+      ctx.stroke();
+      ctx.fillText('Banda A (Filamentos Gruesos - Longitud Constante)', centerX, 233);
+
+      // Bottom dimension bracket for Zona H (if visible)
+      if (actinTipRight > actinTipLeft + 5) {
+        ctx.strokeStyle = '#10b981';
+        ctx.beginPath();
+        ctx.moveTo(actinTipLeft, 242);
+        ctx.lineTo(actinTipRight, 242);
+        ctx.moveTo(actinTipLeft, 239);
+        ctx.lineTo(actinTipLeft, 245);
+        ctx.moveTo(actinTipRight, 239);
+        ctx.lineTo(actinTipRight, 245);
+        ctx.stroke();
+        ctx.fillStyle = '#10b981';
+        ctx.fillText('Zona H', (actinTipLeft + actinTipRight) / 2, 253);
+      }
+    }
+
+    // Helper: Zig-zag Z Disc
+    function drawZDisc(ctx, x, y1, y2, color) {
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.moveTo(x, y1);
+      const segments = 12;
+      const segH = (y2 - y1) / segments;
+      for (let i = 0; i < segments; i++) {
+        const offset = (i % 2 === 0) ? 5 : -5;
+        ctx.lineTo(x + offset, y1 + (i + 0.5) * segH);
+        ctx.lineTo(x, y1 + (i + 1) * segH);
+      }
+      ctx.stroke();
+    }
+
+    // Helper: Titin Spring
+    function drawSpring(ctx, x1, y, x2, y, coils) {
+      const dist = x2 - x1;
+      if (dist <= 0) return;
+      ctx.beginPath();
+      ctx.moveTo(x1, y);
+      const step = dist / coils;
+      for (let i = 0; i < coils; i++) {
+        const mx = x1 + (i + 0.5) * step;
+        const my = y + (i % 2 === 0 ? -4 : 4);
+        ctx.lineTo(mx, my);
+        ctx.lineTo(x1 + (i + 1) * step, y);
+      }
+      ctx.stroke();
+    }
+
+    // Step by step contraction logic
+    let currentStep = 1;
+    const totalSteps = 5;
+
+    const stepsData = {
+      1: {
+        badge: 'Fase 1: Transmisión Sináptica',
+        title: 'Unión Neuromuscular y Activación del Sarcolema',
+        desc: 'El potencial de acción llega al terminal axónico presináptico de la motoneurona alfa somática, abriendo canales de $\\text{Ca}^{2+}$ dependientes de voltaje. La entrada de calcio induce la exocitosis de vesículas con <strong class="text-sky-700">acetilcolina ($\\text{ACh}$)</strong> hacia la hendidura sináptica. La $\\text{ACh}$ se une a receptores nicotínicos postsinápticos ($\\text{nAChR}$) en la placa motora terminal, provocando un flujo masivo de $\\text{Na}^+$ hacia el interior celular generando el <strong class="text-white">Potencial de Placa Terminal (PPT)</strong>.',
+        formula: 'Ecuación clave: Despolarización local $\\to$ Apertura de canales de $\\text{Na}^+_V$ en el sarcolema $\\to$ Propagación del Potencial de Acción muscular bidireccional.'
+      },
+      2: {
+        badge: 'Fase 2: Conducción Tubular & Liberación de Calcio',
+        title: 'Propagación por Túbulos T y Salida Masiva de $\\text{Ca}^{2+}$ del Retículo',
+        desc: 'La onda de despolarización eléctrica se propaga a lo largo del sarcolema e ingresa a las profundidades de la fibra a través de los <strong class="text-sky-700">Túbulos T (transversos)</strong>. El cambio de voltaje es censado por los receptores de dihidropiridina (<strong class="text-amber-800 font-bold">DHPR</strong>, canal de calcio tipo L dependiente de voltaje) en la membrana del túbulo T, que están mecánicamente acoplados a los receptores de rianodina (<strong class="text-amber-800 font-bold">RyR1</strong>) en la membrana de las cisternas terminales del retículo sarcoplásmico. Esto abre los canales RyR1, provocando una <strong class="text-rose-700">liberación explosiva de iones $\\text{Ca}^{2+}$</strong> desde el retículo hacia el citosol sarcoplásmico.',
+        formula: 'Gradiente: La concentración de $\\text{Ca}^{2+}$ citosólico se eleva desde niveles basales de $10^{-7}\\ \\text{M}$ hasta más de $10^{-5}\\ \\text{M}$ en milisegundos.'
+      },
+      3: {
+        badge: 'Fase 3: Alosterismo Regulatorio',
+        title: 'Fijación de $\\text{Ca}^{2+}$ a Troponina C y Desplazamiento de Tropomiosina',
+        desc: 'Los iones $\\text{Ca}^{2+}$ libres en el sarcoplasma se unen a la subunidad <strong class="text-emerald-700">Troponina C (TnC)</strong> del complejo troponínico sobre los filamentos finos. Esta unión induce un cambio conformacional alostérico tridimensional que tracciona a la troponina I y a la <strong class="text-amber-800 font-bold">tropomiosina</strong>, desplazando a esta última hacia la hendidura profunda de la doble hélice de actina. Como consecuencia directa, los <strong class="text-white">sitios activos de unión a la miosina quedan descubiertos</strong> y accesibles para las cabezas globulares.',
+        formula: 'Mecanismo molecular: $4\\text{Ca}^{2+} + \\text{TnC} \\to [\\text{Ca}_4\\text{-TnC}]^* \\to$ Cambio conformacional $\\to$ Tropomiosina destapa surco de Actina.'
+      },
+      4: {
+        badge: 'Fase 4: Ciclo del Puente Cruzado (Golpe de Fuerza)',
+        title: 'Golpe de Fuerza y Deslizamiento Físico del Filamento Fino',
+        desc: 'La cabeza de miosina, previamente energizada y cargada con $\\text{ADP}$ y fosfato inorgánico ($\\text{P}_i$) tras la hidrólisis del $\\text{ATP}$, se acopla con alta afinidad al sitio activo descubierto de la actina. La liberación de $\\text{P}_i$ desencadena el <strong class="text-rose-700">golpe de fuerza (power stroke)</strong>: la cabeza bascula su ángulo de 90° a 45°, traccionando el filamento fino hacia la línea M central. Luego se libera el $\\text{ADP}$, dejando al puente en estado transitorio de rigor.',
+        formula: 'Ciclo contráctil: $\\text{Miosina}\\cdot\\text{ADP}\\cdot\\text{P}_i + \\text{Actina} \\to \\text{Actomiosina} \\to \\text{Power Stroke (tracción)} + \\text{P}_i + \\text{ADP}$.'
+      },
+      5: {
+        badge: 'Fase 5: Desacoplamiento & Recaptura de Calcio',
+        title: 'Unión de Nuevo ATP, Bombeo SERCA y Relajación Muscular',
+        desc: 'Para que el puente cruzado se disocie, una nueva molécula de <strong class="text-amber-800 font-bold">\\text{ATP}</strong> debe unirse a la cabeza de miosina (en ausencia de ATP ocurre el <em>rigor mortis</em> cadavérico). La miosina hidroliza el $\\text{ATP} \\to \\text{ADP} + \\text{P}_i$ volviendo a su posición erguida de 90°. Simultáneamente, la bomba dependiente de ATP <strong class="text-emerald-700">SERCA</strong> ($\\text{Sarco/Endoplasmic Reticulum }\\text{Ca}^{2+}\\text{-ATPase}$) bombea activamente el $\\text{Ca}^{2+}$ del citosol de regreso al retículo sarcoplásmico contra gradiente. La tropomiosina vuelve a bloquear los sitios activos y el sarcómero se relaja.',
+        formula: 'Homeostasis: $\\text{SERCA} + \\text{ATP} \\to 2\\text{Ca}^{2+}\\text{ recapturados al RS por cada ATP hidrolizado} \\to [\\text{Ca}^{2+}]_{\\text{citosol}} < 0.1\\ \\mu\\text{M}$.'
+      }
+    };
+
+    function updateStepUI() {
+      const data = stepsData[currentStep];
+      if (!data) return;
+
+      document.getElementById('stepCounter').textContent = `Paso ${currentStep} de ${totalSteps}`;
+      document.getElementById('step-badge').textContent = data.badge;
+      document.getElementById('step-detail-title').textContent = data.title;
+      document.getElementById('step-detail-desc').innerHTML = data.desc;
+      document.getElementById('step-detail-formula').innerHTML = data.formula;
+
+      for (let i = 1; i <= totalSteps; i++) {
+        const card = document.getElementById(`step-card-i`.replace('i', i));
+        if (card) {
+          if (i === currentStep) {
+            card.classList.remove('opacity-60', 'border-slate-800');
+            card.classList.add('border-2', 'border-accent', 'bg-accent-light', 'opacity-100');
+          } else {
+            card.classList.remove('border-2', 'border-sky-500', 'bg-sky-50/40', 'opacity-100');
+            card.classList.add('opacity-60', 'border-slate-800');
+          }
+        }
+      }
+
+      renderKaTeXMath();
+    }
+
+    function nextStep() {
+      if (currentStep < totalSteps) {
+        currentStep++;
+      } else {
+        currentStep = 1;
+      }
+      updateStepUI();
+    }
+
+    function prevStep() {
+      if (currentStep > 1) {
+        currentStep--;
+      } else {
+        currentStep = totalSteps;
+      }
+      updateStepUI();
+    }
+
+    function goToStep(s) {
+      currentStep = s;
+      updateStepUI();
+    }
+
+    
+
+    // KaTeX Auto-render configuration
+    function renderKaTeXMath() {
+      if (window.renderMathInElement) {
+        window.renderMathInElement(document.body, {
+          delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '$', right: '$', display: false},
+            {left: '\\(', right: '\\)', display: false},
+            {left: '\\[', right: '\\]', display: true}
+          ],
+          throwOnError: false
+        });
+      }
+    }
+
+    // Window Onload Lifecycle Hook
+    window.onload = function () {
+      // 1. Initial Math Rendering
+      setTimeout(renderKaTeXMath, 150);
+
+      // 2. Initialize Sarcómero Canvas
+      initSarcomereCanvas();
+
+      // 3. Initialize Step Box
+      updateStepUI();
+
+      // 5. Default tab setup
+      switchTab('mod-oseo');
+
+      // 6. Handle window resize for dynamic canvas redraw
+      window.addEventListener('resize', () => {
+        if (sarcomereCanvas) {
+          drawSarcomere(currentContractionPercent);
+        }
+      });
+    };
+  </script>
+</body>
+</html>
